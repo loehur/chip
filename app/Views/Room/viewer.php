@@ -74,6 +74,7 @@
     </style>
 </head>
 <div id="content"></div>
+<div id="mutasi"></div>
 
 <!-- Modal -->
 <div class="modal" id="exampleModal">
@@ -85,28 +86,11 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <input name="c" type="number" class="form-control text-center">
+                    <input name="c" type="number" style="height: 100px;font-size:50px" class="form-control text-center">
                     <input name="t" type="hidden">
                 </div>
                 <div class="modal-footer">
-                    <button type="submit" class="btn btn-success w-100" data-bs-dismiss="modal">Proses</button>
-                </div>
-            </form>
-        </div>
-    </div>
-</div>
-
-<div class="modal" id="exampleModal2">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <form action="<?= $this->BASE_URL ?>Room/transfer" method="POST">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Riwayat Chip</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body" id="mutasi"></div>
-                <div class="modal-footer">
-                    <span class="btn btn-secondary w-100" data-bs-dismiss="modal">Tutup</span>
+                    <button type="submit" class="btn btn-lg btn-outline-success w-100" data-bs-dismiss="modal">Transfer</button>
                 </div>
             </form>
         </div>
@@ -115,7 +99,6 @@
 
 <script src="<?= $this->ASSETS_URL ?>js/jquery-3.7.0.min.js"></script>
 <script src="<?= $this->ASSETS_URL ?>plugins/bootstrap-5.1/bootstrap.bundle.min.js"></script>
-<script src="<?= $this->ASSETS_URL ?>js/scripts.js"></script>
 
 <script>
     $(document).ready(function() {
@@ -124,6 +107,11 @@
 
     function content() {
         $("div#content").load('<?= $this->BASE_URL ?><?= $data['page'] ?>/content');
+        setTimeout(mutasi, 1000);
+    }
+
+    function mutasi() {
+        $("#mutasi").load("<?= $this->BASE_URL ?>Room/cek");
     }
 
     $("form").on("submit", function(e) {

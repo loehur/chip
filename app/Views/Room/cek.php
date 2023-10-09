@@ -1,5 +1,5 @@
 <!-- Main page content-->
-<div class="row">
+<div class="row mx-1">
     <div class="col">
         <table class="w-100">
             <?php

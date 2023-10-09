@@ -39,4 +39,16 @@ class I extends Controller
       print_r($ex);
       echo "</pre>";
    }
+
+   public function info()
+   {
+      $info = [
+         "create" => "nama, chip",
+         "delete" => "nama",
+         "list" => "-"
+      ];
+      echo "<pre>";
+      print_r($info);
+      echo "</pre>";
+   }
 }
