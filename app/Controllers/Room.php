@@ -22,8 +22,12 @@ class Room extends Controller
       $this->view("Room/index");
    }
 
-   public function i($user)
+   public function i($user = "")
    {
+      if (strlen($user) == 0) {
+         header("Location: " . $this->BASE_URL);
+      }
+
       $_SESSION['user'] = strtolower($user);
       $this->viewer();
    }
@@ -35,9 +39,18 @@ class Room extends Controller
 
    public function saldo()
    {
+      if (strlen($_SESSION['user']) == 0) {
+         exit();
+      }
       $where = "user = '" . $_SESSION['user'] . "'";
-      $awal =  $this->model("M_DB_1")->get_cols_where("user", "chip", $where, 0)['chip'];
 
+      $cek =  $this->model("M_DB_1")->count_where("user", $where, 0);
+
+      if ($cek == 0) {
+         exit();
+      }
+
+      $awal =  $this->model("M_DB_1")->get_cols_where("user", "chip", $where, 0)['chip'];
       $cols = "SUM(chip) AS chip";
       $where = "f = '" . $_SESSION['user'] . "' GROUP BY f";
       $m =  $this->model("M_DB_1")->get_cols_where("mutasi", $cols, $where, 0);

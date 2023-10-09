@@ -25,7 +25,7 @@ $w = [
         $no = 0;
         foreach ($data['friend'] as $df) {
             $no++ ?>
-            <div style="cursor: pointer;" data-bs-toggle="modal" data-bs-target="#exampleModal" class="col m-1 border border-<?= $w[$no] ?> rounded bayar bg-light" data-user="<?= $df['user'] ?>">
+            <div style="cursor: pointer;" data-bs-toggle="modal" data-bs-target="#exampleModal" class="col m-1 pt-2 border border-<?= $w[$no] ?> rounded bayar bg-light" data-user="<?= $df['user'] ?>">
 
                 <h3>
                     <b class="text-<?= $w[$no] ?>"><?= ucwords($df['user']) ?></b><br>
@@ -38,7 +38,13 @@ $w = [
 <?php } else { ?>
     <div class="row p-5 m-auto" style="max-width: 600px;">
         <div class="col text-center">
-            <h3>User not Found</h3>
+            <h3><span class="text-danger"><?= $_SESSION['user'] ?></span><br>Not Registered</h3>
+        </div>
+    </div>
+
+    <div class="row p-5 m-auto" style="max-width: 600px;">
+        <div class="col text-center">
+            <a href="<?= $this->BASE_URL ?>"><span class="btn btn-lg btn-outline-dark">Back</span></a>
         </div>
     </div>
 <?php } ?>

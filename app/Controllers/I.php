@@ -25,7 +25,7 @@ class I extends Controller
    public function delete($user)
    {
       $where = "user = '" . $user . "'";
-      $ex = $this->model("M_DB_1")->delete("user", $where);
+      $ex = $this->model("M_DB_1")->delete_where("user", $where);
       echo "<pre>";
       print_r($ex);
       echo "</pre>";

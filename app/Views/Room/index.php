@@ -18,19 +18,18 @@
         }
     </style>
 </head>
-<div class="row p-2 mt-4 m-auto" style="max-width: 500px;">
+<div class="row p-2 mt-4 mx-auto" style="max-width: 500px;">
     <div class="col">
-        <div class="mb-2">
-            <label class="form-label">User Login</label>
-            <input type="text" class="form-control" id="user">
+        <div class="mb-3">
+            <label class="form-label text-primary"><b>Chip Username</b></label>
+            <input type="text" style="height: 100px;font-size:50px" class="form-control text-center" id="user">
         </div>
-        <button type="submit" class="btn btn-primary w-100 login">Login</button>
+        <button type="submit" class="btn btn-lg btn-outline-primary w-100 login">Login</button>
     </div>
 </div>
 
 <script src="<?= $this->ASSETS_URL ?>js/jquery-3.7.0.min.js"></script>
 <script src="<?= $this->ASSETS_URL ?>plugins/bootstrap-5.1/bootstrap.bundle.min.js"></script>
-<script src="<?= $this->ASSETS_URL ?>js/scripts.js"></script>
 
 <script>
     $(".login").on("click", function(e) {

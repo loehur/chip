@@ -25,7 +25,7 @@
 
 <!-- Modal -->
 <div class="modal" id="exampleModal">
-    <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-dialog">
         <div class="modal-content">
             <form action="<?= $this->BASE_URL ?>Room/transfer" method="POST">
                 <div class="modal-header">
