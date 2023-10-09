@@ -1,5 +1,5 @@
 <!-- Main page content-->
-<div class="row mx-1">
+<div class="row mx-2 mt-2">
     <div class="col">
         <table class="w-100">
             <?php
@@ -18,7 +18,7 @@
                 }
             ?>
                 <tr class="border-bottom">
-                    <td><small class="text-secondary"><?= $d['insertTime'] ?></small><br><?= ucwords($d['f']) ?> <i class="fa-solid fa-angles-right"></i> <?= ucwords($d['t']) ?></td>
+                    <td><small class="text-secondary"><?= $d['insertTime'] ?></small><br><?= ucwords($d['f']) ?> to <?= ucwords($d['t']) ?></td>
                     <td class="text-end"><span class="text-<?= $w ?>"><b><?= $s ?><?= number_format($d['chip']) ?></b></span><br><small><?= number_format($b) ?> to </small><?= number_format($c) ?></td>
                 </tr>
             <?php
