@@ -122,7 +122,7 @@ class Room extends Controller
    function cek()
    {
       $data['chip'] = $this->saldo();
-      $limit = ($this->model("M_DB_1")->count("user") - 1);
+      $limit = ($this->model("M_DB_1")->count("user") - 1) * 2;
       $data['mutasi'] = $this->model("M_DB_1")->get_where("mutasi", "f = '" . $_SESSION['user'] . "' OR T = '" . $_SESSION['user'] . "' ORDER by id DESC LIMIT " . $limit);
       $this->view("Room/cek", $data);
    }

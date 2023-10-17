@@ -35,7 +35,28 @@
                 <div class="modal-body">
                     <input name="c" type="number" style="height: 100px;font-size:50px" class="form-control text-center">
                     <input name="t" type="hidden">
-                    <button type="submit" class="mt-3 btn btn-lg btn-outline-dark w-100" data-bs-dismiss="modal">Transfer</button>
+                    <div class="row mt-3">
+                        <?php $fast = $this->model("M_DB_1")->get_order("mutasi", "id DESC LIMIT 10");
+                        $no = 0;
+                        $val = [];
+                        foreach ($fast as $fa) {
+                            if ($no >= 2) {
+                                break;
+                            }
+                            if (!isset($val[$fa['chip']])) {
+                                $val[$fa['chip']] = true;
+                                $no += 1;
+                            } else {
+                                continue;
+                            }
+                        ?>
+                            <div class="col">
+                                <span class="btn btn-lg btn-outline-secondary w-100"><?= $fa['chip'] ?></span>
+                            </div>
+                        <?php }
+                        ?>
+                    </div>
+                    <button type="submit" class="mt-3 py-4 btn btn-lg btn-outline-dark w-100" data-bs-dismiss="modal">Transfer</button>
                 </div>
             </form>
         </div>
