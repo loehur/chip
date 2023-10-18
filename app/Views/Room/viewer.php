@@ -22,9 +22,7 @@
         }
     </style>
 </head>
-<div class="float-end me-4 mt-2">
-    <a style="text-decoration: none;" href="<?= $this->BASE_URL ?>Room"><small>Logout</small></a>
-</div>
+
 <div id="content"></div>
 <div id="mutasi"></div>
 

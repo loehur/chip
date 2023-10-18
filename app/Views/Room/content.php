@@ -8,10 +8,10 @@ $w = [
 ?>
 
 <?php if (count($data) <> 0) { ?>
-    <div class="row mt-4 mb-2 pb-0 ps-3 cek">
+    <div class="row mt-4 mx-3 mb-2">
         <div class="col">
             <div class="row">
-                <div class="col">
+                <div class="col text-center m-1 pt-2">
                     <h2>
                         <b class="text-secondary"><?= ucwords($_SESSION['user']) ?></b><br>
                         <div><b><?= number_format($data['chip']) ?></b></div>
@@ -25,7 +25,7 @@ $w = [
         $no = 0;
         foreach ($data['friend'] as $df) {
             $no++ ?>
-            <div style="cursor: pointer;" data-bs-toggle="modal" data-bs-target="#exampleModal" class="col m-1 pt-2 border border-<?= $w[$no] ?> rounded bayar bg-light" data-user="<?= $df['user'] ?>">
+            <div style="cursor: pointer;" data-bs-toggle="modal" data-bs-target="#exampleModal" class="col ps-3 m-1 pt-2 border border-<?= $w[$no] ?> rounded bayar bg-light" data-user="<?= $df['user'] ?>">
                 <h3>
                     <b class="text-<?= $w[$no] ?>"><?= ucwords($df['user']) ?></b><br>
                     <div class=""><b><?= number_format($df['chip']) ?></b></div>
