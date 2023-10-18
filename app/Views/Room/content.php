@@ -35,13 +35,13 @@ $w = [
         <?php } ?>
     </div>
 <?php } else { ?>
-    <div class="row p-5 m-auto" style="max-width: 600px;">
+    <div class="row p-5 m-auto">
         <div class="col text-center">
             <h3><span class="text-danger"><?= $_SESSION['user'] ?></span><br>Not Registered</h3>
         </div>
     </div>
 
-    <div class="row p-5 m-auto" style="max-width: 600px;">
+    <div class="row p-5 m-auto">
         <div class="col text-center">
             <a href="<?= $this->BASE_URL ?>"><span class="btn btn-lg btn-outline-dark">Back</span></a>
         </div>
