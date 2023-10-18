@@ -15,6 +15,8 @@
 
         body {
             min-height: 100%;
+            max-width: 600px;
+            margin: auto;
         }
     </style>
 </head>
@@ -35,5 +37,12 @@
     $(".login").on("click", function(e) {
         var user = $("input#user").val();
         window.location.href = "<?= $this->BASE_URL ?>Room/i/" + user;
+    });
+
+    $('input#user').keypress(function(event) {
+        if (event.keyCode == 13) {
+            var user = $(this).val();
+            window.location.href = "<?= $this->BASE_URL ?>Room/i/" + user;
+        }
     });
 </script>

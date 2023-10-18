@@ -13,6 +13,8 @@
 
         body {
             min-height: 100%;
+            max-width: 600px;
+            margin: auto;
         }
 
         .modal-backdrop {
@@ -20,6 +22,9 @@
         }
     </style>
 </head>
+<div class="float-end me-4 mt-2">
+    <a style="text-decoration: none;" href="<?= $this->BASE_URL ?>Room"><small>Logout</small></a>
+</div>
 <div id="content"></div>
 <div id="mutasi"></div>
 
@@ -51,7 +56,7 @@
                             }
                         ?>
                             <div class="col">
-                                <span class="btn btn-lg btn-outline-secondary w-100"><?= $fa['chip'] ?></span>
+                                <span class="btn btn-lg btn-outline-secondary w-100 fastChip"><?= $fa['chip'] ?></span>
                             </div>
                         <?php }
                         ?>
@@ -100,7 +105,11 @@
         });
     });
 
+    $(".fastChip").click(function() {
+        $("input[name=c]").val($(this).html());
+    })
+
     const interval = setInterval(function() {
         content();
-    }, 5000);
+    }, 3000);
 </script>
