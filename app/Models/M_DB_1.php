@@ -72,6 +72,11 @@ class M_DB_1
         return $this->db->insertCols($table, $columns, $values);
     }
 
+    public function delete($table)
+    {
+        return $this->db->delete($table);
+    }
+
     public function delete_where($table, $where)
     {
         return $this->db->delete_where($table, $where);

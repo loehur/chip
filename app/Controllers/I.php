@@ -31,6 +31,18 @@ class I extends Controller
       echo "</pre>";
    }
 
+   public function reset()
+   {
+      $ex = $this->model("M_DB_1")->delete("user");
+      $ex2 = $this->model("M_DB_1")->delete("mutasi");
+      echo "<pre>";
+      print_r($ex);
+      echo "</pre>";
+      echo "<pre>";
+      print_r($ex2);
+      echo "</pre>";
+   }
+
 
    public function list()
    {
