@@ -124,6 +124,7 @@
     $(".fastChip").click(function() {
         $("input[name=c]").val($(this).html());
         $("input[name=c]").focus();
+        $("button#submit").click();
     })
 
     const interval = setInterval(function() {
