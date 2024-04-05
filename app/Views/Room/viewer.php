@@ -66,7 +66,7 @@
                                 }
                             ?>
                                 <div class="col">
-                                    <span class="btn btn-lg btn-outline-light border w-100 fw-bold fastChip py-3">
+                                    <span class="btn btn-lg btn-outline-light text-dark border w-100 fw-bold fastChip py-3">
                                         <?= $fa['chip'] ?>
                                     </span>
                                 </div>
@@ -125,6 +125,7 @@
 
     $(".fastChip").click(function() {
         $("input[name=c]").val($(this).html());
+        $("input[name=c]").focus();
     })
 
     const interval = setInterval(function() {
