@@ -37,7 +37,7 @@ $w = [
         $no = 0;
         foreach ($data['friend'] as $df) {
             $no++ ?>
-            <div style="cursor: pointer;" data-bs-toggle="modal" data-bs-target="#exampleModal" class="col shadow-sm text-center ps-3 m-1 pt-2 border bg-white border-<?= $w[$no] ?> rounded-3 bayar bg-light" data-user="<?= $df['user'] ?>">
+            <div style="cursor: pointer;" data-bs-toggle="modal" data-bs-target="#exampleModal" class="col shadow-sm text-center px-1 m-1 py-2 border bg-white  rounded-3 bayar bg-light" data-user="<?= $df['user'] ?>">
                 <h3>
                     <b class="text-<?= $w[$no] ?>"><?= ucwords($df['user']) ?></b><br>
                     <div class="<?= $df['chip'] <= 300 ? 'blink_me' : '' ?>"><b><?= number_format($df['chip']) ?></b></div>
