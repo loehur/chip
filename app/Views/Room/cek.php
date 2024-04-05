@@ -1,7 +1,7 @@
 <!-- Main page content-->
 <div class="row mx-2 mt-2">
-    <div class="col">
-        <table class="w-100">
+    <div class="col rounded border shadow-sm bg-white py-2">
+        <table class="w-100 table table-sm">
             <?php
             $c = $data['chip'];
             $s = "";
@@ -18,8 +18,8 @@
                 }
             ?>
                 <tr class="border-bottom">
-                    <td><small class="text-secondary"><?= $d['insertTime'] ?></small><br><?= ucwords($d['f']) ?> to <?= ucwords($d['t']) ?></td>
-                    <td class="text-end"><span class="text-<?= $w ?>"><b><?= $s ?><?= number_format($d['chip']) ?></b></span><br><small><?= number_format($b) ?> to </small><?= number_format($c) ?></td>
+                    <td><?= ucwords($d['f']) ?> <span class="text-primary fw-bold">&#10151;</span> <?= ucwords($d['t']) ?><br><small class="text-secondary"><?= $d['insertTime'] ?></small></td>
+                    <td class="text-end"><span class="text-<?= $w ?>"><b><?= $s ?><?= number_format($d['chip']) ?></b></span><br><small class="text-secondary"><?= number_format($b) ?> &#10151; <?= number_format($c) ?></small></td>
                 </tr>
             <?php
                 if ($d['t'] == $_SESSION['user']) {

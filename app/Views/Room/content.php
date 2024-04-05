@@ -7,28 +7,40 @@ $w = [
 ]
 ?>
 
+<style>
+    .blink_me {
+        animation: blinker 0.7s linear infinite;
+    }
+
+    @keyframes blinker {
+        50% {
+            opacity: 0;
+        }
+    }
+</style>
+
 <?php if (count($data) <> 0) { ?>
-    <div class="row mt-4 mx-3 mb-2">
+    <div class="row mt-4 mx-2 mb-2">
         <div class="col">
             <div class="row">
-                <div class="col text-center m-1 pt-2">
+                <div class="col text-center m-1 py-3 rounded-3 border shadow-sm bg-white">
                     <h2>
                         <b class="text-secondary"><?= ucwords($_SESSION['user']) ?></b><br>
-                        <div><b><?= number_format($data['chip']) ?></b></div>
+                        <div class="<?= $data['chip'] <= 300 ? 'blink_me' : '' ?>"><b><?= number_format($data['chip']) ?></b></div>
                     </h2>
                 </div>
             </div>
         </div>
     </div>
-    <div class="row mx-3">
+    <div class="row mx-2">
         <?php
         $no = 0;
         foreach ($data['friend'] as $df) {
             $no++ ?>
-            <div style="cursor: pointer;" data-bs-toggle="modal" data-bs-target="#exampleModal" class="col ps-3 m-1 pt-2 border border-<?= $w[$no] ?> rounded bayar bg-light" data-user="<?= $df['user'] ?>">
+            <div style="cursor: pointer;" data-bs-toggle="modal" data-bs-target="#exampleModal" class="col shadow-sm text-center ps-3 m-1 pt-2 border bg-white border-<?= $w[$no] ?> rounded-3 bayar bg-light" data-user="<?= $df['user'] ?>">
                 <h3>
                     <b class="text-<?= $w[$no] ?>"><?= ucwords($df['user']) ?></b><br>
-                    <div class=""><b><?= number_format($df['chip']) ?></b></div>
+                    <div class="<?= $df['chip'] <= 300 ? 'blink_me' : '' ?>"><b><?= number_format($df['chip']) ?></b></div>
                 </h3>
 
             </div>
