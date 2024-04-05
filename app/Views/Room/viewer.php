@@ -125,7 +125,6 @@
 
     $(".fastChip").click(function() {
         $("input[name=c]").val($(this).html());
-        $("button#submit").click();
     })
 
     const interval = setInterval(function() {
