@@ -42,7 +42,7 @@
     <div class="modal" id="exampleModal">
         <div class="modal-dialog">
             <div class="modal-content">
-                <form id="form_submit" action="<?= $this->BASE_URL ?>Room/transfer" method="POST">
+                <form action="<?= $this->BASE_URL ?>Room/transfer" method="POST">
                     <div class="modal-header">
                         <h5 class="modal-title" id="exampleModalLabel">Transfer Chip to<br><b class="text-primary" id="target"></b></h5>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
@@ -125,7 +125,6 @@
 
     $(".fastChip").click(function() {
         $("input[name=c]").val($(this).html());
-        $("form#form_submit").submit();
     })
 
     const interval = setInterval(function() {

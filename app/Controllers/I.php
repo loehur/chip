@@ -31,6 +31,14 @@ class I extends Controller
       echo "</pre>";
    }
 
+   public function reset_coin()
+   {
+      $ex2 = $this->model("M_DB_1")->delete("mutasi");
+      echo "<pre>";
+      print_r($ex2);
+      echo "</pre>";
+   }
+
    public function reset()
    {
       $ex = $this->model("M_DB_1")->delete("user");
@@ -57,7 +65,9 @@ class I extends Controller
       $info = [
          "create" => "nama, chip",
          "delete" => "nama",
-         "list" => "-"
+         "reset" => "",
+         "reset_coin" => "",
+         "list" => ""
       ];
       echo "<pre>";
       print_r($info);
