@@ -66,11 +66,9 @@
                                 }
                             ?>
                                 <div class="col">
-                                    <h3 class="text-danger fw-bold">
-                                        <span class="btn btn-lg btn-outline-light border w-100 fastChip py-3">
-                                            <?= $fa['chip'] ?>
-                                        </span>
-                                    </h3>
+                                    <span class="btn btn-lg btn-outline-light border w-100 fw-bold fastChip py-3">
+                                        <?= $fa['chip'] ?>
+                                    </span>
                                 </div>
                             <?php }
                             ?>
