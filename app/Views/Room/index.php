@@ -45,4 +45,10 @@
             window.location.href = "<?= $this->BASE_URL ?>Room/i/" + user;
         }
     });
+
+    var myOffcanvas = document.getElementById('offkanvas')
+    myOffcanvas.addEventListener('show.bs.offcanvas',
+        function() {
+            console.log('show')
+        })
 </script>

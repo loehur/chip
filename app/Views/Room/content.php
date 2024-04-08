@@ -61,7 +61,6 @@ if (count($data) <> 0) { ?>
 <script>
     $(".bayar").on("click", function(e) {
         var t = $(this).attr('data-user');
-        $("input[name=c]").focus();
         $("input[name=t]").val(t);
         $("b#target").html(t.toUpperCase());
     });

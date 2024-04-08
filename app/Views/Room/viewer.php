@@ -43,7 +43,7 @@
     <div id="mutasi" class="px-1"></div>
 
     <!-- Modal -->
-    <div class="offcanvas offcanvas-bottom m-auto rounded-3 bg-light" tabindex="-1" id="offcanvasBottom" style="height: 450px;max-width:500px">
+    <div class="offcanvas offcanvas-bottom m-auto rounded-3 bg-light" tabindex="-1000" id="offcanvasBottom" style="height: 450px;max-width:500px">
         <div class="offcanvas-header">
             <h5 class="offcanvas-title">Transfer Chip to<br><b class="text-danger" id="target"></b></h5>
             <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas"></button>
@@ -123,7 +123,6 @@
 
     $(".fastChip").click(function() {
         $("input[name=c]").val($(this).html());
-        $("input[name=c]").focus();
         $("button#submit").click();
     })
 
