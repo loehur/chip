@@ -7,7 +7,7 @@
             $s = "";
             $w = "";
             foreach ($data['mutasi'] as $d) {
-                if ($d['t'] == $_SESSION['user']) {
+                if (strtoupper($d['t']) == strtoupper($_SESSION['user'])) {
                     $s = "+";
                     $w = "success";
                     $b = $c - $d['chip'];
@@ -22,7 +22,7 @@
                     <td class="text-end"><span class="text-<?= $w ?>"><b><?= $s ?><?= number_format($d['chip']) ?></b></span><br><small class="text-secondary"><?= number_format($b) ?> &#10151; <?= number_format($c) ?></small></td>
                 </tr>
             <?php
-                if ($d['t'] == $_SESSION['user']) {
+                if (strtoupper($d['t']) == strtoupper($_SESSION['user'])) {
                     $c -= $d['chip'];
                 } else {
                     $c += $d['chip'];
