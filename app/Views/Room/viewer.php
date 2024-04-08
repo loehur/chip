@@ -6,15 +6,19 @@
     <link rel="stylesheet" href="<?= $this->ASSETS_URL ?>plugins/bootstrap-5.1/bootstrap.min.css" rel="stylesheet" />
     <link rel="icon" type="image/x-icon" href="<?= $this->ASSETS_URL ?>assets/img/favicon.png" />
 
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+
     <style>
         html {
             height: 100%;
         }
 
         body {
-            min-height: 100%;
-            max-width: 600px;
+            max-width: 500px;
             margin: auto;
+            font-family: "Poppins", sans-serif;
         }
 
         .modal-backdrop {
@@ -39,42 +43,38 @@
     <div id="mutasi" class="px-1"></div>
 
     <!-- Modal -->
-    <div class="modal" id="exampleModal">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <form action="<?= $this->BASE_URL ?>Room/transfer" method="POST">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLabel">Transfer Chip to<br><b class="text-primary" id="target"></b></h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <div class="modal-body">
-                        <input name="c" type="number" style="height: 100px;font-size:50px;" class="form-control text-center shadow-none">
-                        <input name="t" type="hidden">
-                        <div class="row mt-3">
-                            <?php $fast = $this->model("M_DB_1")->get_order("mutasi", "id DESC LIMIT 10");
-                            $no = 0;
-                            $val = [];
-                            foreach ($fast as $fa) {
-                                if ($no >= 2) {
-                                    break;
-                                }
-                                if (!isset($val[$fa['chip']])) {
-                                    $val[$fa['chip']] = true;
-                                    $no += 1;
-                                } else {
-                                    continue;
-                                }
-                            ?>
-                                <div class="col">
-                                    <span class="btn btn-lg btn-outline-light text-dark border w-100 fw-bold fastChip py-3"><?= $fa['chip'] ?></span>
-                                </div>
-                            <?php }
-                            ?>
+    <div class="offcanvas offcanvas-bottom m-auto rounded-3 bg-light" tabindex="-1" id="offcanvasBottom" style="height: 450px;max-width:500px">
+        <div class="offcanvas-header">
+            <h5 class="offcanvas-title">Transfer Chip to<br><b class="text-danger" id="target"></b></h5>
+            <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas"></button>
+        </div>
+        <div class="offcanvas-body">
+            <form action="<?= $this->BASE_URL ?>Room/transfer" method="POST">
+                <input name="c" type="number" style="height: 100px;font-size:50px;" class="form-control text-center shadow-none">
+                <input name="t" type="hidden">
+                <div class="row mt-2">
+                    <?php $fast = $this->model("M_DB_1")->get_order("mutasi", "id DESC LIMIT 10");
+                    $no = 0;
+                    $val = [];
+                    foreach ($fast as $fa) {
+                        if ($no >= 2) {
+                            break;
+                        }
+                        if (!isset($val[$fa['chip']])) {
+                            $val[$fa['chip']] = true;
+                            $no += 1;
+                        } else {
+                            continue;
+                        }
+                    ?>
+                        <div class="col">
+                            <h1><span class="btn btn-lg border bg-white shadow-none w-100 fw-bold fastChip py-3" data-bs-dismiss="offcanvas"><?= $fa['chip'] ?></span></h1>
                         </div>
-                        <button type="submit" id="submit" onclick="playAudio()" class="mt-3 py-4 btn btn-lg btn-light border shadow-sm w-100" data-bs-dismiss="modal">Transfer</button>
-                    </div>
-                </form>
-            </div>
+                    <?php }
+                    ?>
+                </div>
+                <button type="submit" id="submit" data-bs-dismiss="offcanvas" onclick="playAudio()" class="mt-1 py-4 btn btn-lg btn-danger border shadow-sm w-100" data-bs-dismiss="modal">Transfer</button>
+            </form>
         </div>
     </div>
 </body>

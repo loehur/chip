@@ -14,9 +14,9 @@
         }
 
         body {
-            min-height: 100%;
-            max-width: 600px;
+            max-width: 500px;
             margin: auto;
+            font-family: "Times New Roman", Times, serif;
         }
     </style>
 </head>
