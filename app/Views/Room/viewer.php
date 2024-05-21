@@ -39,6 +39,11 @@
         <source src="<?= $this->ASSETS_URL ?>audio/coinout.mp3" type="audio/mpeg">
     </audio>
 
+    <div class="row mt-3">
+        <div class="col text-end pe-4">
+            Server <span id="server_status" class="text-danger">&#8718;</span>
+        </div>
+    </div>
     <div id="content" class=""></div>
     <div id="mutasi" class="px-1"></div>
 
@@ -50,9 +55,13 @@
         </div>
         <div class="offcanvas-body">
             <form action="<?= $this->BASE_URL ?>Room/transfer" method="POST">
-                <input name="c" type="number" style="height: 100px;font-size:50px;" class="form-control text-center shadow-none">
-                <input name="t" type="hidden">
-                <div class="row mt-2">
+                <div class="row mt-2 mx-1">
+                    <div class="col px-1">
+                        <input name="c" type="number" style="height: 100px;font-size:50px;" class="form-control text-center shadow-none">
+                        <input name="t" type="hidden">
+                    </div>
+                </div>
+                <div class="row mt-2 mx-1">
                     <?php $fast = $this->model("M_DB_1")->get_order("mutasi", "id DESC LIMIT 10");
                     $no = 0;
                     $val = [];
@@ -67,13 +76,17 @@
                             continue;
                         }
                     ?>
-                        <div class="col">
+                        <div class="col px-1">
                             <h1><span class="btn btn-lg border bg-white shadow-none w-100 fw-bold fastChip py-3" data-bs-dismiss="offcanvas"><?= $fa['chip'] ?></span></h1>
                         </div>
                     <?php }
                     ?>
                 </div>
-                <button type="submit" id="submit" data-bs-dismiss="offcanvas" onclick="playAudio()" class="mt-1 py-4 btn btn-lg btn-danger border shadow-sm w-100" data-bs-dismiss="modal">Transfer</button>
+                <div class="row mt-2 mx-1">
+                    <div class="col px-1">
+                        <button type="submit" id="submit" data-bs-dismiss="offcanvas" onclick="playAudio()" class="mt-1 py-4 btn btn-lg btn-danger bg-gradient shadow-sm w-100" data-bs-dismiss="modal">Transfer</button>
+                    </div>
+                </div>
             </form>
         </div>
     </div>
@@ -87,6 +100,31 @@
         content();
     });
 
+    function auto_load() {
+        content();
+    };
+    setInterval(auto_load, 3000);
+
+    var sock = new WebSocket("ws://103.149.177.29:5001?id=<?= $_SESSION['user'] . date("YmdHis") . rand(0, 9) ?>");
+    var log = document.getElementById("log");
+
+    sock.onopen = function(data) {
+        clearInterval(auto_load);
+        $("#server_status").removeClass("text-danger");
+        $("#server_status").addClass("text-success");
+        console.log(data);
+    };
+
+    sock.onmessage = function(event) {
+        content();
+    };
+
+    sock.onclose = function(event) {
+        setInterval(auto_load, 3000);
+        $("#server_status").removeClass("text-success");
+        $("#server_status").addClass("text-danger");
+    };
+
     function playAudio() {
         var x = document.getElementById("myAudio");
         x.play();
@@ -94,7 +132,7 @@
 
     function content() {
         $("div#content").load('<?= $this->BASE_URL ?><?= $data['page'] ?>/content');
-        setTimeout(mutasi, 1000);
+        mutasi();
     }
 
     function mutasi() {
@@ -116,6 +154,12 @@
                 if (res == 0) {
                     $("input").val("");
                     content();
+                    var obj = {
+                        target: 'all_xme',
+                        text: 0
+                    };
+
+                    sock.send(JSON.stringify(obj));
                 }
             }
         });
@@ -125,8 +169,4 @@
         $("input[name=c]").val($(this).html());
         $("button#submit").click();
     })
-
-    const interval = setInterval(function() {
-        content();
-    }, 3000);
 </script>

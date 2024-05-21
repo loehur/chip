@@ -1,7 +1,7 @@
 <!-- Main page content-->
 <div class="row mx-2 mt-1">
-    <div class="col rounded border shadow-sm bg-white py-2">
-        <table class="w-100 table table-sm mb-1">
+    <div class="col rounded border bg-white py-2">
+        <table class="table table-sm mb-0">
             <?php
             $c = $data['chip'];
             $s = "";

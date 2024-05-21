@@ -16,17 +16,42 @@
         body {
             max-width: 500px;
             margin: auto;
-            font-family: "Times New Roman", Times, serif;
         }
     </style>
 </head>
-<div class="row p-2 mt-4 mx-auto" style="max-width: 500px;">
+<div class="row mt-5">
+    <div class="col px-5">
+        <?php if (strlen($data) > 0) { ?>
+            <div class="alert alert-danger"><?= $data ?></div>
+        <?php } ?>
+    </div>
+</div>
+<div class="row p-2 mb-2 mx-auto" style="max-width: 500px;">
     <div class="col">
         <div class="mb-3">
             <label class="form-label text-primary"><b>Chip Username</b></label>
-            <input type="text" style="height: 100px;font-size:50px" class="form-control text-center" id="user">
+            <input type="text" style="height: 100px;font-size:50px" class="form-control text-center rounded-3 shadow-none" id="user">
         </div>
-        <button type="submit" class="btn btn-lg btn-outline-primary w-100 login">Login</button>
+        <button type="submit" class="btn btn-lg rounded-3 btn-primary bg-gradient w-100 login">Login</button>
+    </div>
+</div>
+<div class="row">
+    <div class="col px-5 py-2">
+        <small>
+            <?php
+            $info = [
+                "create" => "nama, chip",
+                "delete" => "nama",
+                "reset" => "",
+                "reset_coin" => "",
+                "list" => ""
+            ];
+            echo "
+        <pre>";
+            print_r($info);
+            echo "</pre>";
+            ?>
+        </small>
     </div>
 </div>
 
@@ -45,10 +70,4 @@
             window.location.href = "<?= $this->BASE_URL ?>Room/i/" + user;
         }
     });
-
-    var myOffcanvas = document.getElementById('offkanvas')
-    myOffcanvas.addEventListener('show.bs.offcanvas',
-        function() {
-            console.log('show')
-        })
 </script>

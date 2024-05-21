@@ -19,17 +19,37 @@ class Room extends Controller
 
    public function index()
    {
-      $this->view("Room/index");
+      $data = $_GET['msg'] ?? "";
+      $this->view("Room/index", $data);
    }
 
    public function i($user = "")
    {
       if (strlen($user) == 0) {
-         header("Location: " . $this->BASE_URL);
+         header("Location: " . $this->BASE_URL . "?msg=Invalid User");
       }
 
-      $_SESSION['user'] = strtolower($user);
-      $this->viewer();
+      $cek = $this->model("M_DB_1")->count_where("user", "user = '" . $user . "'");
+      if ($cek > 0) {
+         $_SESSION['user'] = strtolower($user);
+         $this->viewer();
+      } else {
+         header("Location: " . $this->BASE_URL . "?msg=Invalid Username");
+      }
+   }
+
+   public function content()
+   {
+      $data = [];
+      $cek = $this->model("M_DB_1")->count_where("user", "user = '" . $_SESSION['user'] . "'");
+      if ($cek <> 0) {
+         $data['chip'] = $this->saldo();
+         $data['friend'] = $this->model("M_DB_1")->get_where("user", "user <> '" . $_SESSION['user'] . "'");
+         foreach ($data['friend'] as $k => $df) {
+            $data['friend'][$k]['chip'] = $this->saldo_f($df['user']);
+         }
+      }
+      $this->view($this->v_content, $data);
    }
 
    public function viewer()
@@ -92,20 +112,6 @@ class Room extends Controller
       }
 
       return ($awal - $mutasi);
-   }
-
-   public function content()
-   {
-      $data = [];
-      $cek = $this->model("M_DB_1")->count_where("user", "user = '" . $_SESSION['user'] . "'");
-      if ($cek <> 0) {
-         $data['chip'] = $this->saldo();
-         $data['friend'] = $this->model("M_DB_1")->get_where("user", "user <> '" . $_SESSION['user'] . "'");
-         foreach ($data['friend'] as $k => $df) {
-            $data['friend'][$k]['chip'] = $this->saldo_f($df['user']);
-         }
-      }
-      $this->view($this->v_content, $data);
    }
 
    public function transfer()
