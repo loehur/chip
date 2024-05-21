@@ -98,32 +98,32 @@
 <script>
     $(document).ready(function() {
         content();
+
+        var sock = new WebSocket("<?= $this->WS_SERV ?>?id=<?= $_SESSION['user'] . date("YmdHis") . rand(0, 9) ?>");
+        var log = document.getElementById("log");
+
+        sock.onopen = function(data) {
+            clearInterval(auto_load);
+            $("#server_status").removeClass("text-danger");
+            $("#server_status").addClass("text-success");
+            console.log(data);
+        };
+
+        sock.onmessage = function(event) {
+            content();
+        };
+
+        sock.onclose = function(event) {
+            setInterval(auto_load, 3000);
+            $("#server_status").removeClass("text-success");
+            $("#server_status").addClass("text-danger");
+        };
     });
 
     function auto_load() {
         content();
     };
     setInterval(auto_load, 3000);
-
-    var sock = new WebSocket("ws://103.149.177.29:5001?id=<?= $_SESSION['user'] . date("YmdHis") . rand(0, 9) ?>");
-    var log = document.getElementById("log");
-
-    sock.onopen = function(data) {
-        clearInterval(auto_load);
-        $("#server_status").removeClass("text-danger");
-        $("#server_status").addClass("text-success");
-        console.log(data);
-    };
-
-    sock.onmessage = function(event) {
-        content();
-    };
-
-    sock.onclose = function(event) {
-        setInterval(auto_load, 3000);
-        $("#server_status").removeClass("text-success");
-        $("#server_status").addClass("text-danger");
-    };
 
     function playAudio() {
         var x = document.getElementById("myAudio");
