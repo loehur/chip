@@ -12,6 +12,11 @@ class I extends Controller
       }
    }
 
+   function tes()
+   {
+      echo "jalan";
+   }
+
    public function create($user, $chip)
    {
       $player = explode(",", $user);
