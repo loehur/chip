@@ -20,7 +20,7 @@ class Room extends Controller
    public function index()
    {
       $data = $_GET['msg'] ?? "";
-      $this->view("Room/index", $data);
+      $this->view("Login/login", $data);
    }
 
    public function i($user = "")

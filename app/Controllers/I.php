@@ -14,12 +14,18 @@ class I extends Controller
 
    public function create($user, $chip)
    {
-      $cols = "user, chip";
-      $vals = "'" . $user . "'," . $chip;
-      $ex = $this->model("M_DB_1")->insertCols("user", $cols, $vals);
-      echo "<pre>";
-      print_r($ex);
-      echo "</pre>";
+      $player = explode(",", $user);
+
+      foreach ($player as $p) {
+         if (strlen($p) > 1) {
+            $cols = "user, chip";
+            $vals = "'" . $p . "'," . $chip;
+            $ex = $this->model("M_DB_1")->insertCols("user", $cols, $vals);
+            echo "<pre>";
+            print_r($ex);
+            echo "</pre>";
+         }
+      }
    }
 
    public function delete($user)
