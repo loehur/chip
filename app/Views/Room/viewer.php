@@ -96,28 +96,31 @@
 <script src="<?= $this->ASSETS_URL ?>plugins/bootstrap-5.1/bootstrap.bundle.min.js"></script>
 
 <script>
+    var connect_stat = false;
+
+    var sock = new WebSocket("wss://free.blr2.piesocket.com/v3/1?api_key=P5u7Bm0oLAfw4QQMPGH45yzAt3L0Bs4LXmgXi74n&notify_self=0");
+
+    sock.onopen = function(data) {
+        connect_stat = true;
+        clearInterval(auto_load);
+        $("#server_status").removeClass("text-danger");
+        $("#server_status").addClass("text-success");
+        console.log(data);
+    };
+
+    sock.onmessage = function(event) {
+        content();
+    };
+
+    sock.onclose = function(event) {
+        connect_stat = false;
+        setInterval(auto_load, 3000);
+        $("#server_status").removeClass("text-success");
+        $("#server_status").addClass("text-danger");
+    };
+
     $(document).ready(function() {
         content();
-
-        var sock = new WebSocket("<?= $this->WS_SERV ?>?id=<?= $_SESSION['user'] . date("YmdHis") . rand(0, 9) ?>");
-        var log = document.getElementById("log");
-
-        sock.onopen = function(data) {
-            clearInterval(auto_load);
-            $("#server_status").removeClass("text-danger");
-            $("#server_status").addClass("text-success");
-            console.log(data);
-        };
-
-        sock.onmessage = function(event) {
-            content();
-        };
-
-        sock.onclose = function(event) {
-            setInterval(auto_load, 3000);
-            $("#server_status").removeClass("text-success");
-            $("#server_status").addClass("text-danger");
-        };
     });
 
     function auto_load() {
@@ -155,11 +158,11 @@
                     $("input").val("");
                     content();
                     var obj = {
-                        target: 'all_xme',
                         text: 0
                     };
-
-                    sock.send(JSON.stringify(obj));
+                    if (connect_stat === true) {
+                        sock.send(JSON.stringify(obj));
+                    }
                 }
             }
         });
