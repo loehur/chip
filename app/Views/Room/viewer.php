@@ -98,7 +98,7 @@
 <script>
     var connect_stat = false;
 
-    var sock = new WebSocket("wss://free.blr2.piesocket.com/v3/1?api_key=P5u7Bm0oLAfw4QQMPGH45yzAt3L0Bs4LXmgXi74n&notify_self=0");
+    var sock = new WebSocket(<?= $this->WS_SERV ?>);
 
     sock.onopen = function(data) {
         connect_stat = true;
