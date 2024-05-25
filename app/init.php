@@ -1,4 +1,4 @@
 <?php
 spl_autoload_register(function ($class) {
-     include 'Core/' . $class . '.php';
+     require_once 'Core/' . $class . '.php';
 });

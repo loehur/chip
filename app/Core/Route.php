@@ -6,7 +6,6 @@ class Route extends DB_Config
     protected $method       = 'index';
     protected $param        = [];
 
-
     public function __construct()
     {
         session_start();
