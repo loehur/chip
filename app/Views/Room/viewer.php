@@ -98,7 +98,7 @@
 <script>
     var connect_stat = false;
 
-    var sock = new WebSocket(<?= $this->WS_SERV ?>);
+    var sock = new WebSocket('<?= $this->WS_SERV ?>');
 
     sock.onopen = function(data) {
         connect_stat = true;
