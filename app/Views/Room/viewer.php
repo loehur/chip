@@ -97,6 +97,14 @@
 
 <script>
     var connect_stat = false;
+    $(document).ready(function() {
+        content();
+    });
+
+    function auto_load() {
+        content();
+    };
+    setInterval(auto_load, 3000);
 
     var sock = new WebSocket('<?= $this->WS_SERV ?>');
 
@@ -109,6 +117,7 @@
     };
 
     sock.onmessage = function(event) {
+        clearInterval(auto_load);
         content();
     };
 
@@ -119,14 +128,6 @@
         $("#server_status").addClass("text-danger");
     };
 
-    $(document).ready(function() {
-        content();
-    });
-
-    function auto_load() {
-        content();
-    };
-    setInterval(auto_load, 3000);
 
     function playAudio() {
         var x = document.getElementById("myAudio");
