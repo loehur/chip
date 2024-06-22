@@ -9,7 +9,6 @@ class DB_1 extends DB_Config
 
     public function __construct()
     {
-        $this->db_pass =  $_SESSION['secure']['db_pass'];
         $this->mysqli = new mysqli($this->db_host, $this->db_user, $this->db_pass, $this->db_name) or die('DB Error');
     }
 

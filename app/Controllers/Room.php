@@ -8,13 +8,6 @@ class Room extends Controller
    {
       $this->v_content = $this->page . "/content";
       $this->v_viewer = $this->page . "/viewer";
-
-      $_SESSION['secure']['encryption'] = "j499uL0v3ly&N3lyL0vEly_F0r3ver";
-      if (strlen($this->db_pass) == 0) {
-         $_SESSION['secure']['db_pass'] = "";
-      } else {
-         $_SESSION['secure']['db_pass'] = $this->model("Enc")->dec_2($this->db_pass);
-      }
    }
 
    public function index()
