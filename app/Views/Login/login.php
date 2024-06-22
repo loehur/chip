@@ -19,14 +19,14 @@
         }
     </style>
 </head>
-<div class="row mt-3 mb-0">
-    <div class="col mx-3 px-3">
+<div class="row mx-0 mt-3 mb-0">
+    <div class="col px-3">
         <?php if (strlen($data) > 0) { ?>
             <div class="alert alert-danger text-center mb-0"><?= $data ?></div>
         <?php } ?>
     </div>
 </div>
-<div class="row p-2 mb-2 mx-auto" style="max-width: 500px;">
+<div class="row mx-0 p-2 mb-2 mx-auto" style="max-width: 500px;">
     <div class="col">
         <div class="mb-3">
             <label class="form-label text-primary"><b>Chip Username</b></label>
@@ -35,8 +35,8 @@
         <button type="submit" class="btn btn-lg rounded-3 btn-primary bg-gradient w-100 login">Login</button>
     </div>
 </div>
-<div class="row pb-5">
-    <div class="col mx-3 px-3">
+<div class="row mx-0 pb-5">
+    <div class="col px-3">
         <div class="bg-warning bg-opacity-10 rounded p-3">
             <small>
                 <?php
