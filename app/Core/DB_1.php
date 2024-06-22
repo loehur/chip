@@ -5,7 +5,6 @@ class DB_1 extends DB_Config
 {
     private static $_instance = null;
     private $mysqli;
-    public $db_pass;
 
     public function __construct()
     {
