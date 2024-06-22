@@ -34,13 +34,13 @@
     </style>
 </head>
 
-<body class="bg-light">
+<body class="bg-light mx-2">
     <audio id="myAudio">
         <source src="<?= $this->ASSETS_URL ?>audio/coinout.mp3" type="audio/mpeg">
     </audio>
 
-    <div class="row mt-3">
-        <div class="col text-end pe-4">
+    <div class="row mx-0 mt-3">
+        <div class="col text-end">
             Server <span id="server_status" class="text-danger">&#8718;</span>
         </div>
     </div>
@@ -101,23 +101,16 @@
         content();
     });
 
-    function auto_load() {
-        content();
-    };
-    setInterval(auto_load, 3000);
-
     var sock = new WebSocket('<?= $this->WS_SERV ?>');
 
     sock.onopen = function(data) {
         connect_stat = true;
-        clearInterval(auto_load);
         $("#server_status").removeClass("text-danger");
         $("#server_status").addClass("text-success");
         console.log(data);
     };
 
     sock.onmessage = function(event) {
-        clearInterval(auto_load);
         content();
     };
 
