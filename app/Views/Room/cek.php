@@ -1,7 +1,7 @@
 <!-- Main page content-->
-<div style="margin-top: 0.5rem;">
+<div style="margin-top: 0;">
     <div style="background: #111113; border: 1px solid rgba(255,255,255,0.06); border-radius: 12px; padding: 0.75rem; overflow: hidden;">
-        <table style="width: 100%; color: #fafafa; border-collapse: collapse; font-size: 0.875rem;">
+        <table style="width: 100%; color: #fafafa; border-collapse: separate; border-spacing: 0 1rem; font-size: 0.875rem;">
             <?php
             $c = $data['chip'];
             $s = "";

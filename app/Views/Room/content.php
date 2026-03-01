@@ -15,7 +15,7 @@ $colors = [1 => '#dc2626', 2 => '#22c55e', 3 => '#3b82f6', 4 => '#eab308', 5 => 
         width: 100%;
     }
     .chip-box.me .name {
-        font-size: 0.6875rem;
+        font-size: 0.9375rem;
         font-weight: 600;
         color: var(--chip-success);
         text-transform: uppercase;
@@ -31,7 +31,7 @@ $colors = [1 => '#dc2626', 2 => '#22c55e', 3 => '#3b82f6', 4 => '#eab308', 5 => 
     .chip-friends {
         display: grid;
         grid-template-columns: repeat(2, 1fr);
-        gap: 0.5rem;
+        gap: 1rem;
     }
     .chip-box {
         background: var(--chip-card);
@@ -49,7 +49,7 @@ $colors = [1 => '#dc2626', 2 => '#22c55e', 3 => '#3b82f6', 4 => '#eab308', 5 => 
         background: #18181b;
     }
     .chip-box.friend .name {
-        font-size: 0.75rem;
+        font-size: 0.9375rem;
         font-weight: 500;
         text-transform: uppercase;
         letter-spacing: 0.04em;

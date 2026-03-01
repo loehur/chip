@@ -28,7 +28,7 @@
         .server-status { text-align: right; margin-top: 0.75rem; font-size: 0.8125rem; color: var(--chip-muted); }
         .server-status.connected { color: var(--chip-success); }
         #content { margin-top: 0.5rem; }
-        #mutasi { padding: 0 0.25rem; }
+        #mutasi { margin-top: 1rem; padding: 0 0.25rem; }
         .offcanvas-backdrop {
             display: none;
             position: fixed;
