@@ -188,6 +188,9 @@
             </div>
             <button type="submit" class="btn-login">Login</button>
         </form>
+        <div style="text-align: center; margin-top: 1rem;">
+            <a href="<?= $this->BASE_URL ?>Admin" style="font-size: 0.85rem; color: var(--text-muted);">Admin Menu</a>
+        </div>
     </div>
 
     <div class="info-box">
