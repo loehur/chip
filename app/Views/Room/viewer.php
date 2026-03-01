@@ -25,9 +25,20 @@
             color: var(--chip-text);
             -webkit-font-smoothing: antialiased;
         }
-        .server-status { text-align: right; margin-top: 0.75rem; font-size: 0.8125rem; color: var(--chip-muted); }
+        .header-row { display: flex; justify-content: space-between; align-items: center; margin-top: 0.75rem; }
+        .btn-logout {
+            font-size: 0.8125rem;
+            color: var(--chip-muted);
+            background: none;
+            border: none;
+            cursor: pointer;
+            text-decoration: none;
+            font-family: inherit;
+        }
+        .btn-logout:hover { color: var(--chip-text); }
+        .server-status { font-size: 0.8125rem; color: var(--chip-muted); }
         .server-status.connected { color: var(--chip-success); }
-        #content { margin-top: 0.5rem; }
+        #content { margin-top: 1.5rem; }
         #mutasi { margin-top: 1rem; }
         .offcanvas-backdrop {
             display: none;
@@ -123,7 +134,10 @@
         <source src="<?= $this->ASSETS_URL ?>audio/coinout.mp3" type="audio/mpeg">
     </audio>
 
-    <div class="server-status" id="server_status">Server &#10007;</div>
+    <div class="header-row">
+        <a href="<?= $this->BASE_URL ?>Room/logout" class="btn-logout">Logout</a>
+        <span class="server-status" id="server_status">Server &#10007;</span>
+    </div>
     <div id="content"></div>
     <div id="mutasi"></div>
 

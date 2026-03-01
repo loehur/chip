@@ -16,6 +16,13 @@ class Room extends Controller
       $this->view("Login/login", $data);
    }
 
+   public function logout()
+   {
+      unset($_SESSION['user']);
+      header("Location: " . $this->BASE_URL);
+      exit;
+   }
+
    public function i($user = "")
    {
       if (strlen($user) == 0) {
