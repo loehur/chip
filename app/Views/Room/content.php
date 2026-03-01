@@ -5,8 +5,30 @@ $colors = [1 => '#dc2626', 2 => '#22c55e', 3 => '#3b82f6', 4 => '#eab308', 5 => 
 <style>
     .blink_me { animation: blinker 0.7s linear infinite; }
     @keyframes blinker { 50% { opacity: 0; } }
-    .chip-content {
-        padding: 0.5rem 0;
+    .chip-me-section { padding: 0.5rem 0 1rem; }
+    .chip-box.me {
+        background: rgba(34,197,94,0.08);
+        border: 1px solid rgba(34,197,94,0.25);
+        border-radius: 16px;
+        padding: 1.75rem 1.5rem;
+        text-align: center;
+        width: 100%;
+    }
+    .chip-box.me .name {
+        font-size: 0.6875rem;
+        font-weight: 600;
+        color: var(--chip-success);
+        text-transform: uppercase;
+        letter-spacing: 0.08em;
+        margin-bottom: 0.5rem;
+    }
+    .chip-box.me .value {
+        font-size: 2.25rem;
+        font-weight: 700;
+        letter-spacing: -0.03em;
+        color: var(--chip-text);
+    }
+    .chip-friends {
         display: grid;
         grid-template-columns: repeat(2, 1fr);
         gap: 0.5rem;
@@ -16,13 +38,8 @@ $colors = [1 => '#dc2626', 2 => '#22c55e', 3 => '#3b82f6', 4 => '#eab308', 5 => 
         border: 1px solid var(--chip-border);
         border-radius: 12px;
         padding: 1.25rem 1rem;
-        margin: 0.375rem 0;
         text-align: center;
         transition: border-color 0.2s, background 0.2s;
-    }
-    .chip-box.me {
-        background: rgba(34,197,94,0.06);
-        border-color: rgba(34,197,94,0.15);
     }
     .chip-box.friend {
         background: var(--chip-card);
@@ -31,15 +48,14 @@ $colors = [1 => '#dc2626', 2 => '#22c55e', 3 => '#3b82f6', 4 => '#eab308', 5 => 
         border-color: rgba(255,255,255,0.1);
         background: #18181b;
     }
-    .chip-box .name {
+    .chip-box.friend .name {
         font-size: 0.75rem;
         font-weight: 500;
-        color: var(--chip-muted);
         text-transform: uppercase;
         letter-spacing: 0.04em;
         margin-bottom: 0.375rem;
     }
-    .chip-box .value {
+    .chip-box.friend .value {
         font-size: 1.5rem;
         font-weight: 600;
         letter-spacing: -0.02em;
@@ -47,13 +63,14 @@ $colors = [1 => '#dc2626', 2 => '#22c55e', 3 => '#3b82f6', 4 => '#eab308', 5 => 
     }
 </style>
 
-<div class="chip-content">
-    <div>
-        <div class="chip-box me">
-            <div class="name"><?= ucwords($_SESSION['user']) ?></div>
-            <div class="<?= $data['chip'] <= 300 ? 'blink_me' : '' ?> value"><?= number_format($data['chip']) ?></div>
-        </div>
+<div class="chip-me-section">
+    <div class="chip-box me">
+        <div class="name"><?= ucwords($_SESSION['user']) ?></div>
+        <div class="<?= $data['chip'] <= 300 ? 'blink_me' : '' ?> value"><?= number_format($data['chip']) ?></div>
     </div>
+</div>
+
+<div class="chip-friends">
     <?php $no = 0;
     foreach ($data['friend'] as $df) {
         $no++;

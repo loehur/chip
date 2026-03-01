@@ -17,9 +17,9 @@
         * { margin: 0; padding: 0; box-sizing: border-box; }
         html { height: 100%; }
         body {
-            max-width: 500px;
+            max-width: 560px;
             margin: 0 auto;
-            padding: 0 0.5rem;
+            padding: 0 1.25rem;
             font-family: 'DM Sans', -apple-system, sans-serif;
             background: var(--chip-bg);
             color: var(--chip-text);
@@ -43,7 +43,7 @@
             left: 50%;
             transform: translateX(-50%) translateY(100%);
             width: 100%;
-            max-width: 500px;
+            max-width: 560px;
             height: 450px;
             background: var(--chip-card);
             border: 1px solid var(--chip-border);
