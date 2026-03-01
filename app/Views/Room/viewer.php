@@ -5,52 +5,63 @@
     <title>Chip</title>
     <link rel="stylesheet" href="<?= $this->ASSETS_URL ?>plugins/bootstrap-5.1/bootstrap.min.css" rel="stylesheet" />
     <link rel="icon" type="image/x-icon" href="<?= $this->ASSETS_URL ?>img/favicon.png" />
-
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
-
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700&display=swap" rel="stylesheet">
     <style>
-        html {
-            height: 100%;
+        :root {
+            --chip-bg: #0a0a0b; --chip-card: #111113; --chip-input: #1c1c1f;
+            --chip-border: rgba(255,255,255,0.06); --chip-text: #fafafa;
+            --chip-muted: #71717a; --chip-success: #22c55e; --chip-danger: #dc2626;
+            --chip-primary: #3b82f6; --chip-warning: #eab308;
         }
-
+        html { height: 100%; }
         body {
             max-width: 500px;
             margin: auto;
-            font-family: "Poppins", sans-serif;
+            font-family: 'DM Sans', -apple-system, sans-serif;
+            background: var(--chip-bg) !important;
+            color: var(--chip-text) !important;
+            -webkit-font-smoothing: antialiased;
         }
-
-        .modal-backdrop {
-            opacity: 0.1 !important;
+        .modal-backdrop { opacity: 0.4 !important; background: #000 !important; }
+        .offcanvas { background: var(--chip-card) !important; border: 1px solid var(--chip-border) !important; }
+        .offcanvas-header { border-bottom: 1px solid var(--chip-border) !important; }
+        .offcanvas-title { color: var(--chip-text) !important; }
+        .btn-close { filter: invert(1); opacity: 0.6; }
+        .form-control {
+            background: var(--chip-input) !important;
+            border: 1px solid var(--chip-border) !important;
+            color: var(--chip-text) !important;
         }
-
-        /* Chrome, Safari, Edge, Opera */
-        input::-webkit-outer-spin-button,
-        input::-webkit-inner-spin-button {
-            -webkit-appearance: none;
-            margin: 0;
-        }
+        .form-control:focus { border-color: rgba(255,255,255,0.15) !important; box-shadow: none !important; }
+        .btn-danger { background: var(--chip-danger) !important; border-color: var(--chip-danger) !important; }
+        .btn-danger:hover { opacity: 0.9; }
+        .border { border-color: var(--chip-border) !important; }
+        .bg-white { background: var(--chip-input) !important; }
+        .fastChip { color: var(--chip-text) !important; }
+        input::-webkit-outer-spin-button, input::-webkit-inner-spin-button { -webkit-appearance: none; margin: 0; }
+        #server_status.text-success { color: var(--chip-success) !important; }
     </style>
 </head>
 
-<body class="bg-light mx-2">
+<body class="mx-2">
     <audio id="myAudio">
         <source src="<?= $this->ASSETS_URL ?>audio/coinout.mp3" type="audio/mpeg">
     </audio>
 
     <div class="row mx-0 mt-3">
-        <div class="col text-end">
-            Server <span id="server_status" class="text-danger">&#8718;</span>
+        <div class="col text-end" style="color: var(--chip-muted); font-size: 0.8125rem;">
+            Server <span id="server_status" style="color: var(--chip-danger);">&#8718;</span>
         </div>
     </div>
     <div id="content" class=""></div>
     <div id="mutasi" class="px-1"></div>
 
     <!-- Modal -->
-    <div class="offcanvas offcanvas-bottom m-auto rounded-3 bg-light" tabindex="-1000" id="offcanvasBottom" style="height: 450px;max-width:500px">
+    <div class="offcanvas offcanvas-bottom m-auto rounded-3" tabindex="-1000" id="offcanvasBottom" style="height: 450px;max-width:500px">
         <div class="offcanvas-header">
-            <h5 class="offcanvas-title">Transfer Chip to<br><b class="text-danger" id="target"></b></h5>
+            <h5 class="offcanvas-title">Transfer Chip to<br><b id="target" style="color: var(--chip-danger);"></b></h5>
             <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas"></button>
         </div>
         <div class="offcanvas-body">

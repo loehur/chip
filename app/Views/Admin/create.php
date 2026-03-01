@@ -4,40 +4,40 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Create User - Admin Chip</title>
     <link rel="icon" type="image/x-icon" href="<?= $this->ASSETS_URL ?>img/favicon.png" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700&display=swap" rel="stylesheet">
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
         :root {
-            --bg-dark: #0f0f12;
-            --bg-card: #18181d;
-            --bg-input: #222228;
-            --accent: #f59e0b;
-            --text: #f4f4f5;
-            --text-muted: #a1a1aa;
-            --success: #22c55e;
-            --radius: 12px;
+            --bg: #0a0a0b; --card: #111113; --input: #1c1c1f;
+            --border: rgba(255,255,255,0.04); --text: #fafafa;
+            --muted: #71717a; --accent: #a1a1aa; --success: #22c55e;
+            --success-soft: rgba(34,197,94,0.12); --radius: 10px; --radius-lg: 16px;
         }
-        body { font-family: "Segoe UI", system-ui, sans-serif; background: var(--bg-dark); color: var(--text); padding: 2rem; }
-        .container { max-width: 500px; margin: 0 auto; }
-        .card { background: var(--bg-card); border: 1px solid rgba(255,255,255,0.06); border-radius: var(--radius); padding: 1.5rem; margin-bottom: 1rem; }
-        .form-label { display: block; font-size: 0.85rem; color: var(--accent); margin-bottom: 0.5rem; }
-        .form-input { width: 100%; padding: 0.75rem; background: var(--bg-input); border: 2px solid rgba(255,255,255,0.08); border-radius: 8px; color: var(--text); margin-bottom: 1rem; }
-        .form-input:focus { outline: none; border-color: var(--accent); }
-        .btn { padding: 0.75rem 1.5rem; background: var(--accent); color: var(--bg-dark); border: none; border-radius: 8px; font-weight: 600; cursor: pointer; }
-        .btn:hover { opacity: 0.9; }
-        .nav { margin-bottom: 1rem; }
-        .nav a { color: var(--text-muted); font-size: 0.9rem; }
+        body { font-family: 'DM Sans', -apple-system, sans-serif; background: var(--bg); color: var(--text); padding: 2rem; -webkit-font-smoothing: antialiased; }
+        .container { max-width: 480px; margin: 0 auto; }
+        .card { background: var(--card); border: 1px solid var(--border); border-radius: var(--radius-lg); padding: 1.75rem; margin-bottom: 1rem; }
+        .nav { margin-bottom: 1.25rem; }
+        .nav a { font-size: 0.8125rem; color: var(--muted); text-decoration: none; }
         .nav a:hover { color: var(--accent); }
-        .result { background: rgba(34,197,94,0.15); border: 1px solid rgba(34,197,94,0.3); border-radius: var(--radius); padding: 1rem; margin-top: 1rem; font-size: 0.85rem; }
-        .result pre { white-space: pre-wrap; word-break: break-all; margin: 0; }
+        h2 { font-size: 1.25rem; font-weight: 600; margin-bottom: 1.25rem; color: var(--text); }
+        .form-label { display: block; font-size: 0.8125rem; color: var(--muted); margin-bottom: 0.5rem; }
+        .form-input { width: 100%; padding: 0.75rem 1rem; font-size: 0.9375rem; font-family: inherit; background: var(--input); border: 1px solid var(--border); border-radius: var(--radius); color: var(--text); margin-bottom: 1rem; }
+        .form-input:focus { outline: none; border-color: rgba(255,255,255,0.12); }
+        .btn { padding: 0.75rem 1.5rem; font-size: 0.9375rem; font-weight: 500; font-family: inherit; background: var(--text); color: var(--bg); border: 1px solid var(--text); border-radius: var(--radius); cursor: pointer; transition: all 0.2s; }
+        .btn:hover { background: var(--accent); border-color: var(--accent); color: var(--bg); }
+        .result { background: var(--success-soft); border: 1px solid rgba(34,197,94,0.25); border-radius: var(--radius); padding: 1rem; margin-top: 1.25rem; font-size: 0.8125rem; }
+        .result pre { white-space: pre-wrap; word-break: break-all; margin: 0; font-family: 'SF Mono', Consolas, monospace; }
     </style>
 </head>
 <body>
     <div class="container">
         <div class="nav"><a href="<?= $this->BASE_URL ?>Admin/menu">← Kembali ke Menu</a></div>
         <div class="card">
-            <h2 style="margin-bottom: 1rem; color: var(--accent);">Create User</h2>
+            <h2>Create User</h2>
             <form method="post">
-                <label class="form-label">Username (pisah koma untuk banyak: user1,user2,user3)</label>
+                <label class="form-label">Username (pisah koma: user1,user2,user3)</label>
                 <input type="text" class="form-input" name="user" placeholder="user1,user2,user3" required>
                 <label class="form-label">Chip awal</label>
                 <input type="number" class="form-input" name="chip" placeholder="100" value="100" min="0" required>

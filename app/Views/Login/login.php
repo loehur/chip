@@ -5,165 +5,128 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Chip</title>
     <link rel="icon" type="image/x-icon" href="<?= $this->ASSETS_URL ?>img/favicon.png" />
-
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700&display=swap" rel="stylesheet">
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
+        * { margin: 0; padding: 0; box-sizing: border-box; }
         :root {
-            --bg-dark: #0f0f12;
-            --bg-card: #18181d;
-            --bg-input: #222228;
-            --accent: #f59e0b;
-            --accent-hover: #fbbf24;
-            --text: #f4f4f5;
-            --text-muted: #a1a1aa;
-            --danger: #ef4444;
-            --danger-bg: rgba(239, 68, 68, 0.15);
-            --warning-bg: rgba(245, 158, 11, 0.12);
-            --radius: 12px;
-            --radius-lg: 20px;
+            --bg: #0a0a0b;
+            --card: #111113;
+            --input: #1c1c1f;
+            --border: rgba(255,255,255,0.04);
+            --text: #fafafa;
+            --muted: #71717a;
+            --subtle: #52525b;
+            --accent: #a1a1aa;
+            --danger: #dc2626;
+            --danger-soft: rgba(220,38,38,0.12);
+            --radius: 10px;
+            --radius-lg: 16px;
         }
-
-        html {
-            height: 100%;
-        }
-
+        html { height: 100%; }
         body {
             min-height: 100%;
-            font-family: "Segoe UI", system-ui, -apple-system, sans-serif;
-            background: var(--bg-dark);
+            font-family: 'DM Sans', -apple-system, sans-serif;
+            background: var(--bg);
             color: var(--text);
             display: flex;
             flex-direction: column;
             align-items: center;
-            padding: 2rem 1rem 3rem;
-            background-image:
-                radial-gradient(ellipse 80% 50% at 50% -20%, rgba(245, 158, 11, 0.15), transparent),
-                radial-gradient(ellipse 60% 40% at 100% 0%, rgba(245, 158, 11, 0.08), transparent);
+            padding: 3rem 1.5rem 4rem;
+            -webkit-font-smoothing: antialiased;
         }
-
-        .login-container {
-            width: 100%;
-            max-width: 420px;
-        }
-
-        .logo-title {
-            text-align: center;
-            margin-bottom: 2rem;
-        }
-
+        .login-container { width: 100%; max-width: 400px; }
+        .logo-title { text-align: center; margin-bottom: 2.5rem; }
         .logo-title h1 {
-            font-size: 2.5rem;
-            font-weight: 700;
-            letter-spacing: -0.02em;
-            background: linear-gradient(135deg, var(--text) 0%, var(--accent) 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
+            font-size: 2.25rem;
+            font-weight: 600;
+            letter-spacing: -0.03em;
+            color: var(--text);
         }
-
         .card {
-            background: var(--bg-card);
-            border: 1px solid rgba(255, 255, 255, 0.06);
+            background: var(--card);
+            border: 1px solid var(--border);
             border-radius: var(--radius-lg);
             padding: 2rem;
-            margin-bottom: 1.5rem;
-            box-shadow: 0 4px 24px rgba(0, 0, 0, 0.4);
+            margin-bottom: 1.25rem;
         }
-
         .alert {
             padding: 1rem 1.25rem;
             border-radius: var(--radius);
-            margin-bottom: 1.5rem;
+            margin-bottom: 1.25rem;
             text-align: center;
-            font-size: 0.9rem;
-        }
-
-        .alert-danger {
-            background: var(--danger-bg);
+            font-size: 0.875rem;
+            background: var(--danger-soft);
             color: var(--danger);
-            border: 1px solid rgba(239, 68, 68, 0.3);
+            border: 1px solid rgba(220,38,38,0.25);
         }
-
-        .form-group {
-            margin-bottom: 1.5rem;
-        }
-
+        .form-group { margin-bottom: 1.5rem; }
         .form-label {
             display: block;
-            font-size: 0.85rem;
-            font-weight: 600;
-            color: var(--accent);
+            font-size: 0.8125rem;
+            font-weight: 500;
+            color: var(--muted);
             margin-bottom: 0.5rem;
-            letter-spacing: 0.02em;
         }
-
         .form-input {
             width: 100%;
-            height: 72px;
+            height: 56px;
             padding: 0 1.25rem;
-            font-size: 1.75rem;
-            font-weight: 600;
+            font-size: 1.125rem;
+            font-family: inherit;
             text-align: center;
-            letter-spacing: 0.05em;
-            background: var(--bg-input);
-            border: 2px solid rgba(255, 255, 255, 0.08);
+            background: var(--input);
+            border: 1px solid var(--border);
             border-radius: var(--radius);
             color: var(--text);
-            transition: border-color 0.2s, box-shadow 0.2s;
+            transition: border-color 0.2s, background 0.2s;
         }
-
-        .form-input::placeholder {
-            color: var(--text-muted);
-            opacity: 0.6;
-        }
-
+        .form-input::placeholder { color: var(--subtle); }
         .form-input:focus {
             outline: none;
-            border-color: var(--accent);
-            box-shadow: 0 0 0 3px rgba(245, 158, 11, 0.2);
+            border-color: rgba(255,255,255,0.12);
+            background: #18181b;
         }
-
         .btn-login {
             width: 100%;
-            height: 56px;
-            font-size: 1.1rem;
-            font-weight: 600;
-            letter-spacing: 0.03em;
-            color: var(--bg-dark);
-            background: linear-gradient(135deg, var(--accent) 0%, #d97706 100%);
-            border: none;
+            height: 52px;
+            font-size: 0.9375rem;
+            font-weight: 500;
+            font-family: inherit;
+            color: var(--bg);
+            background: var(--text);
+            border: 1px solid var(--text);
             border-radius: var(--radius);
             cursor: pointer;
-            transition: transform 0.15s, box-shadow 0.2s;
+            transition: background 0.2s, color 0.2s, border-color 0.2s;
         }
-
         .btn-login:hover {
-            background: linear-gradient(135deg, var(--accent-hover) 0%, var(--accent) 100%);
-            transform: translateY(-1px);
-            box-shadow: 0 8px 24px rgba(245, 158, 11, 0.35);
+            background: var(--accent);
+            border-color: var(--accent);
+            color: var(--bg);
         }
-
-        .btn-login:active {
-            transform: translateY(0);
+        .admin-link {
+            display: block;
+            text-align: center;
+            margin-top: 1.25rem;
+            font-size: 0.8125rem;
+            color: var(--muted);
+            text-decoration: none;
+            transition: color 0.2s;
         }
-
+        .admin-link:hover { color: var(--accent); }
         .info-box {
-            background: var(--warning-bg);
-            border: 1px solid rgba(245, 158, 11, 0.2);
+            background: var(--card);
+            border: 1px solid var(--border);
             border-radius: var(--radius);
             padding: 1.25rem;
-            font-size: 0.8rem;
-            color: var(--text-muted);
-            line-height: 1.6;
+            font-size: 0.75rem;
+            color: var(--muted);
+            line-height: 1.7;
         }
-
         .info-box pre {
-            font-family: "Consolas", "Monaco", monospace;
+            font-family: 'SF Mono', Consolas, monospace;
             white-space: pre-wrap;
             word-break: break-all;
             margin: 0;
@@ -177,7 +140,7 @@
     </div>
 
     <?php if (strlen($data) > 0) { ?>
-        <div class="alert alert-danger"><?= $data ?></div>
+        <div class="alert"><?= htmlspecialchars($data) ?></div>
     <?php } ?>
 
     <div class="card">
@@ -188,9 +151,7 @@
             </div>
             <button type="submit" class="btn-login">Login</button>
         </form>
-        <div style="text-align: center; margin-top: 1rem;">
-            <a href="<?= $this->BASE_URL ?>Admin" style="font-size: 0.85rem; color: var(--text-muted);">Admin Menu</a>
-        </div>
+        <a href="<?= $this->BASE_URL ?>Admin" class="admin-link">Admin Menu</a>
     </div>
 
     <div class="info-box">

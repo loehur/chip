@@ -1,7 +1,7 @@
 <!-- Main page content-->
 <div class="row mt-1 mx-0">
-    <div class="col rounded border bg-white py-2">
-        <table class="table table-sm mb-0 mx-0">
+    <div class="col rounded py-2" style="background: #111113; border: 1px solid rgba(255,255,255,0.06); border-radius: 12px;">
+        <table class="table table-sm mb-0 mx-0" style="color: #fafafa;">
             <?php
             $c = $data['chip'];
             $s = "";
@@ -9,17 +9,23 @@
             foreach ($data['mutasi'] as $d) {
                 if (strtoupper($d['t']) == strtoupper($_SESSION['user'])) {
                     $s = "+";
-                    $w = "success";
+                    $w = "#22c55e";
                     $b = $c - $d['chip'];
                 } else {
                     $s = "-";
-                    $w = "danger";
+                    $w = "#dc2626";
                     $b = $c + $d['chip'];
                 }
             ?>
-                <tr class="border-bottom">
-                    <td><?= ucwords($d['f']) ?> <span class="text-primary fw-bold">&#10151;</span> <?= ucwords($d['t']) ?><br><small class="text-secondary"><?= $d['insertTime'] ?></small></td>
-                    <td class="text-end"><span class="text-<?= $w ?>"><b><?= $s ?><?= number_format($d['chip']) ?></b></span><br><small class="text-secondary"><?= number_format($b) ?> &#10151; <?= number_format($c) ?></small></td>
+                <tr style="border-bottom: 1px solid rgba(255,255,255,0.06);">
+                    <td style="padding: 0.6rem 0.75rem;">
+                        <?= ucwords($d['f']) ?> <span style="color: #3b82f6; font-weight: 600;">&#10151;</span> <?= ucwords($d['t']) ?><br>
+                        <small style="color: #71717a; font-size: 0.75rem;"><?= $d['insertTime'] ?></small>
+                    </td>
+                    <td class="text-end" style="padding: 0.6rem 0.75rem;">
+                        <span style="color: <?= $w ?>; font-weight: 600;"><b><?= $s ?><?= number_format($d['chip']) ?></b></span><br>
+                        <small style="color: #71717a; font-size: 0.75rem;"><?= number_format($b) ?> &#10151; <?= number_format($c) ?></small>
+                    </td>
                 </tr>
             <?php
                 if (strtoupper($d['t']) == strtoupper($_SESSION['user'])) {

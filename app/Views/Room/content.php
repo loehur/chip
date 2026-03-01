@@ -1,46 +1,41 @@
 <!-- Main page content-->
 <?php
-$w = [
-    1 => "danger",
-    2 => "success",
-    3 => "primary",
-]
+$colors = [1 => '#dc2626', 2 => '#22c55e', 3 => '#3b82f6'];
 ?>
-
 <style>
-    .blink_me {
-        animation: blinker 0.7s linear infinite;
+    .blink_me { animation: blinker 0.7s linear infinite; }
+    @keyframes blinker { 50% { opacity: 0; } }
+    .chip-box {
+        background: #111113;
+        border: 1px solid rgba(255,255,255,0.06);
+        border-radius: 12px;
+        padding: 1rem;
+        margin: 0.25rem 0;
+        text-align: center;
     }
-
-    @keyframes blinker {
-        50% {
-            opacity: 0;
-        }
-    }
+    .chip-box.me { background: rgba(34,197,94,0.08); border-color: rgba(34,197,94,0.2); }
+    .chip-box.friend { background: rgba(161,161,170,0.06); }
+    .chip-box.friend:hover { border-color: rgba(255,255,255,0.12); }
+    .chip-box .name { font-size: 0.8125rem; color: #71717a; }
+    .chip-box .value { font-size: 1.5rem; font-weight: 600; color: #fafafa; }
 </style>
-
-<?php
-$classCol = "text-center pt-2 my-1 rounded-3 border"; ?>
 
 <div class="row mx-0 row-cols-2">
     <div class="col p-1">
-        <div class="<?= $classCol ?> bg-success bg-opacity-10">
-            <h3>
-                <span class="text-secondary"><?= ucwords($_SESSION['user']) ?></span><br>
-                <div class="<?= $data['chip'] <= 300 ? 'blink_me' : '' ?>"><b><?= number_format($data['chip']) ?></b></div>
-            </h3>
+        <div class="chip-box me">
+            <div class="name"><?= ucwords($_SESSION['user']) ?></div>
+            <div class="<?= $data['chip'] <= 300 ? 'blink_me' : '' ?> value"><?= number_format($data['chip']) ?></div>
         </div>
     </div>
-    <?php
-    $no = 0;
+    <?php $no = 0;
     foreach ($data['friend'] as $df) {
-        $no++ ?>
+        $no++;
+        $c = $colors[$no] ?? '#a1a1aa';
+    ?>
         <div class="col p-1 bayar" data-user="<?= $df['user'] ?>" style="cursor: pointer;" data-bs-toggle="offcanvas" data-bs-target="#offcanvasBottom">
-            <div class="<?= $classCol ?> bg-warning bg-opacity-10">
-                <h3>
-                    <span class="text-<?= $w[$no] ?>"><?= ucwords($df['user']) ?></span><br>
-                    <div class="<?= $df['chip'] <= 300 ? 'blink_me' : '' ?>"><b><?= number_format($df['chip']) ?></b></div>
-                </h3>
+            <div class="chip-box friend">
+                <div class="name" style="color: <?= $c ?>"><?= ucwords($df['user']) ?></div>
+                <div class="<?= $df['chip'] <= 300 ? 'blink_me' : '' ?> value"><?= number_format($df['chip']) ?></div>
             </div>
         </div>
     <?php } ?>
