@@ -220,7 +220,11 @@
     }
 
     function content() {
-        $("#content").load('<?= $this->BASE_URL ?><?= $data['page'] ?>/content');
+        var oldChip = parseInt($(".chip-box.me .value").text().replace(/,/g, '')) || 0;
+        $("#content").load('<?= $this->BASE_URL ?><?= $data['page'] ?>/content', function() {
+            var newChip = parseInt($(".chip-box.me .value").text().replace(/,/g, '')) || 0;
+            if (oldChip > 0 && newChip > oldChip) playAudio();
+        });
         mutasi();
     }
 
