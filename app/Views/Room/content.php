@@ -1,6 +1,6 @@
 <!-- Main page content-->
 <?php
-$colors = [1 => '#dc2626', 2 => '#22c55e', 3 => '#3b82f6', 4 => '#eab308', 5 => '#8b5cf6'];
+$nameColors = ['#3b82f6', '#dc2626', '#22c55e', '#eab308', '#8b5cf6', '#ec4899', '#06b6d4', '#f97316'];
 ?>
 <style>
     .blink_me { animation: blinker 0.7s linear infinite; }
@@ -17,7 +17,6 @@ $colors = [1 => '#dc2626', 2 => '#22c55e', 3 => '#3b82f6', 4 => '#eab308', 5 => 
     .chip-box.me .name {
         font-size: 0.9375rem;
         font-weight: 600;
-        color: var(--chip-success);
         text-transform: uppercase;
         letter-spacing: 0.08em;
         margin-bottom: 0.5rem;
@@ -65,7 +64,7 @@ $colors = [1 => '#dc2626', 2 => '#22c55e', 3 => '#3b82f6', 4 => '#eab308', 5 => 
 
 <div class="chip-me-section">
     <div class="chip-box me">
-        <div class="name"><?= ucwords($_SESSION['user']) ?></div>
+        <div class="name" style="color: <?= $nameColors[0] ?>"><?= ucwords($_SESSION['user']) ?></div>
         <div class="<?= $data['chip'] <= 300 ? 'blink_me' : '' ?> value"><?= number_format($data['chip']) ?></div>
     </div>
 </div>
@@ -73,8 +72,8 @@ $colors = [1 => '#dc2626', 2 => '#22c55e', 3 => '#3b82f6', 4 => '#eab308', 5 => 
 <div class="chip-friends">
     <?php $no = 0;
     foreach ($data['friend'] as $df) {
+        $c = $nameColors[(($no % (count($nameColors) - 1)) + 1)] ?? '#a1a1aa';
         $no++;
-        $c = $colors[$no] ?? '#a1a1aa';
     ?>
     <div class="bayar" data-user="<?= $df['user'] ?>" style="cursor: pointer;">
         <div class="chip-box friend">

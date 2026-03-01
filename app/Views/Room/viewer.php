@@ -28,7 +28,7 @@
         .server-status { text-align: right; margin-top: 0.75rem; font-size: 0.8125rem; color: var(--chip-muted); }
         .server-status.connected { color: var(--chip-success); }
         #content { margin-top: 0.5rem; }
-        #mutasi { margin-top: 1rem; padding: 0 0.25rem; }
+        #mutasi { margin-top: 1rem; }
         .offcanvas-backdrop {
             display: none;
             position: fixed;
@@ -161,6 +161,15 @@
 
 <script>
     var connect_stat = false;
+    var pollTimeout;
+
+    function schedulePoll() {
+        clearTimeout(pollTimeout);
+        pollTimeout = setTimeout(function() {
+            content();
+            if (connect_stat) schedulePoll();
+        }, 10000);
+    }
 
     function openOffcanvas() {
         $("#offcanvasBackdrop").addClass("show");
@@ -193,10 +202,15 @@
     sock.onopen = function(data) {
         connect_stat = true;
         $("#server_status").addClass("connected").text("Server \u2714");
+        schedulePoll();
     };
-    sock.onmessage = function(event) { content(); };
+    sock.onmessage = function(event) {
+        content();
+        schedulePoll();
+    };
     sock.onclose = function(event) {
         connect_stat = false;
+        clearTimeout(pollTimeout);
         setInterval(function() { content(); }, 3000);
         $("#server_status").removeClass("connected").text("Server \u2718");
     };
