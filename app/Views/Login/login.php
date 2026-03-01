@@ -116,21 +116,6 @@
             transition: color 0.2s;
         }
         .admin-link:hover { color: var(--accent); }
-        .info-box {
-            background: var(--card);
-            border: 1px solid var(--border);
-            border-radius: var(--radius);
-            padding: 1.25rem;
-            font-size: 0.75rem;
-            color: var(--muted);
-            line-height: 1.7;
-        }
-        .info-box pre {
-            font-family: 'SF Mono', Consolas, monospace;
-            white-space: pre-wrap;
-            word-break: break-all;
-            margin: 0;
-        }
     </style>
 </head>
 
@@ -152,38 +137,6 @@
             <button type="submit" class="btn-login">Login</button>
         </form>
         <a href="<?= $this->BASE_URL ?>Admin" class="admin-link">Admin Menu</a>
-    </div>
-
-    <div class="info-box">
-        <small>
-            <?php
-            $info = [
-                "create" => [
-                    "message" => "create user",
-                    "params" => "[name1],[nama2],dst/chip",
-                ],
-                "delete" => [
-                    "message" => "delete user",
-                    "params" => "[name]"
-                ],
-                "reset" => [
-                    "message" => "clear database",
-                    "params" => "",
-                ],
-                "reset_coin" => [
-                    "message" => "reset user coin to default",
-                    "params" => "",
-                ],
-                "list" => [
-                    "message" => "view all user",
-                    "params" => "",
-                ]
-            ];
-            echo "<pre>";
-            print_r($info);
-            echo "</pre>";
-            ?>
-        </small>
     </div>
 </div>
 
