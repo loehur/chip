@@ -1,7 +1,7 @@
 <!-- Main page content-->
-<div class="row mt-1 mx-0">
-    <div class="col rounded py-2" style="background: #111113; border: 1px solid rgba(255,255,255,0.06); border-radius: 12px;">
-        <table class="table table-sm mb-0 mx-0" style="color: #fafafa;">
+<div style="margin-top: 0.5rem;">
+    <div style="background: #111113; border: 1px solid rgba(255,255,255,0.06); border-radius: 12px; padding: 0.75rem; overflow: hidden;">
+        <table style="width: 100%; color: #fafafa; border-collapse: collapse; font-size: 0.875rem;">
             <?php
             $c = $data['chip'];
             $s = "";
@@ -22,7 +22,7 @@
                         <?= ucwords($d['f']) ?> <span style="color: #3b82f6; font-weight: 600;">&#10151;</span> <?= ucwords($d['t']) ?><br>
                         <small style="color: #71717a; font-size: 0.75rem;"><?= $d['insertTime'] ?></small>
                     </td>
-                    <td class="text-end" style="padding: 0.6rem 0.75rem;">
+                    <td style="padding: 0.6rem 0.75rem; text-align: right;">
                         <span style="color: <?= $w ?>; font-weight: 600;"><b><?= $s ?><?= number_format($d['chip']) ?></b></span><br>
                         <small style="color: #71717a; font-size: 0.75rem;"><?= number_format($b) ?> &#10151; <?= number_format($c) ?></small>
                     </td>

@@ -5,7 +5,12 @@ $colors = [1 => '#dc2626', 2 => '#22c55e', 3 => '#3b82f6', 4 => '#eab308', 5 => 
 <style>
     .blink_me { animation: blinker 0.7s linear infinite; }
     @keyframes blinker { 50% { opacity: 0; } }
-    .chip-content { padding: 0.5rem 0; }
+    .chip-content {
+        padding: 0.5rem 0;
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 0.5rem;
+    }
     .chip-box {
         background: var(--chip-card);
         border: 1px solid var(--chip-border);
@@ -42,8 +47,8 @@ $colors = [1 => '#dc2626', 2 => '#22c55e', 3 => '#3b82f6', 4 => '#eab308', 5 => 
     }
 </style>
 
-<div class="chip-content row mx-0 row-cols-2">
-    <div class="col p-1">
+<div class="chip-content">
+    <div>
         <div class="chip-box me">
             <div class="name"><?= ucwords($_SESSION['user']) ?></div>
             <div class="<?= $data['chip'] <= 300 ? 'blink_me' : '' ?> value"><?= number_format($data['chip']) ?></div>
@@ -54,19 +59,11 @@ $colors = [1 => '#dc2626', 2 => '#22c55e', 3 => '#3b82f6', 4 => '#eab308', 5 => 
         $no++;
         $c = $colors[$no] ?? '#a1a1aa';
     ?>
-        <div class="col p-1 bayar" data-user="<?= $df['user'] ?>" style="cursor: pointer;" data-bs-toggle="offcanvas" data-bs-target="#offcanvasBottom">
-            <div class="chip-box friend">
-                <div class="name" style="color: <?= $c ?>"><?= ucwords($df['user']) ?></div>
-                <div class="<?= $df['chip'] <= 300 ? 'blink_me' : '' ?> value"><?= number_format($df['chip']) ?></div>
-            </div>
+    <div class="bayar" data-user="<?= $df['user'] ?>" style="cursor: pointer;">
+        <div class="chip-box friend">
+            <div class="name" style="color: <?= $c ?>"><?= ucwords($df['user']) ?></div>
+            <div class="<?= $df['chip'] <= 300 ? 'blink_me' : '' ?> value"><?= number_format($df['chip']) ?></div>
         </div>
+    </div>
     <?php } ?>
 </div>
-
-<script>
-    $(".bayar").on("click", function(e) {
-        var t = $(this).attr('data-user');
-        $("input[name=t]").val(t);
-        $("b#target").html(t.toUpperCase());
-    });
-</script>
