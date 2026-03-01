@@ -138,17 +138,17 @@
                 <input name="c" type="number" class="transfer-input" placeholder="0">
                 <input name="t" type="hidden">
                 <div class="fast-chip-row">
-                    <?php $fast = $this->model("M_DB_1")->get_order("mutasi", "id DESC LIMIT 10");
-                    $no = 0;
-                    $val = [];
-                    foreach ($fast as $fa) {
-                        if ($no >= 2) break;
-                        if (!isset($val[$fa['chip']])) {
-                            $val[$fa['chip']] = true;
-                            $no += 1;
-                        } else continue;
-                    ?>
-                        <button type="button" class="fast-chip-btn fastChip" data-chip="<?= $fa['chip'] ?>"><?= $fa['chip'] ?></button>
+                    <?php
+                    $all = $this->model("M_DB_1")->get_order("mutasi", "id DESC LIMIT 200");
+                    $counts = [];
+                    foreach ($all as $row) {
+                        $c = $row['chip'];
+                        $counts[$c] = ($counts[$c] ?? 0) + 1;
+                    }
+                    arsort($counts);
+                    $top2 = array_slice(array_keys($counts), 0, 2);
+                    foreach ($top2 as $chip) { ?>
+                        <button type="button" class="fast-chip-btn fastChip" data-chip="<?= $chip ?>"><?= $chip ?></button>
                     <?php } ?>
                 </div>
                 <button type="submit" id="submit" class="btn-transfer" onclick="playAudio()">Transfer</button>
