@@ -130,8 +130,14 @@
 </head>
 
 <body>
-    <audio id="myAudio">
-        <source src="<?= $this->ASSETS_URL ?>audio/coinout.mp3" type="audio/mpeg">
+    <audio id="audioCoinout" preload="auto">
+        <source src="<?= $this->ASSETS_URL ?>audio/coinout.wav" type="audio/wav">
+    </audio>
+    <audio id="audioCoinin" preload="auto">
+        <source src="<?= $this->ASSETS_URL ?>audio/coinin.mpeg" type="audio/mpeg">
+    </audio>
+    <audio id="audioKritis" preload="auto">
+        <source src="<?= $this->ASSETS_URL ?>audio/kritis.mpeg" type="audio/mpeg">
     </audio>
 
     <div class="header-row">
@@ -165,7 +171,7 @@
                         <button type="button" class="fast-chip-btn fastChip" data-chip="<?= $chip ?>"><?= $chip ?></button>
                     <?php } ?>
                 </div>
-                <button type="submit" id="submit" class="btn-transfer" onclick="playAudio()">Transfer</button>
+                <button type="submit" id="submit" class="btn-transfer" onclick="playCoinout()">Transfer</button>
             </form>
         </div>
     </div>
@@ -229,15 +235,24 @@
         $("#server_status").removeClass("connected").text("Server \u2718");
     };
 
-    function playAudio() {
-        document.getElementById("myAudio").play();
+    function playCoinout() {
+        document.getElementById("audioCoinout").play();
+    }
+    function playCoinin() {
+        document.getElementById("audioCoinin").play();
+    }
+    function playKritis() {
+        document.getElementById("audioKritis").play();
     }
 
     function content() {
         var oldChip = parseInt($(".chip-box.me .value").text().replace(/,/g, '')) || 0;
         $("#content").load('<?= $this->BASE_URL ?><?= $data['page'] ?>/content', function() {
             var newChip = parseInt($(".chip-box.me .value").text().replace(/,/g, '')) || 0;
-            if (oldChip > 0 && newChip > oldChip) playAudio();
+            if (oldChip > 0) {
+                if (newChip > oldChip) playCoinin();
+                else if (oldChip > 300 && newChip <= 300) playKritis();
+            }
         });
         mutasi();
     }
