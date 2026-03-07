@@ -130,17 +130,18 @@
 </head>
 
 <body>
-    <audio id="audioCoinout" preload="auto">
-        <source src="<?= $this->ASSETS_URL ?>audio/coinout.wav" type="audio/wav">
-    </audio>
-    <audio id="audioCoinin" preload="auto">
-        <source src="<?= $this->ASSETS_URL ?>audio/coinin.mp3" type="audio/mpeg">
-        <source src="<?= $this->ASSETS_URL ?>audio/coinin.wav" type="audio/wav">
-    </audio>
-    <audio id="audioKritis" preload="auto">
-        <source src="<?= $this->ASSETS_URL ?>audio/kritis.mp3" type="audio/mpeg">
-        <source src="<?= $this->ASSETS_URL ?>audio/kritis.wav" type="audio/wav">
-    </audio>
+    <script>
+        (function() {
+            var base = "<?= rtrim($this->ASSETS_URL, '/') ?>/audio/";
+            var origin = window.location.origin || (window.location.protocol + "//" + window.location.host);
+            if (base.indexOf("http") !== 0) base = origin + (base.charAt(0) === "/" ? base : "/" + base);
+            window.AUDIO_URL = {
+                coinout: base + "coinout.wav",
+                coinin: base + "coinin.wav",
+                kritis: base + "kritis.wav"
+            };
+        })();
+    </script>
 
     <div class="header-row">
         <a href="<?= $this->BASE_URL ?>Room/logout" class="btn-logout">Logout</a>
@@ -173,7 +174,7 @@
                         <button type="button" class="fast-chip-btn fastChip" data-chip="<?= $chip ?>"><?= $chip ?></button>
                     <?php } ?>
                 </div>
-                <button type="submit" id="submit" class="btn-transfer" onclick="playCoinout()">Transfer</button>
+                <button type="submit" id="submit" class="btn-transfer">Transfer</button>
             </form>
         </div>
     </div>
@@ -241,28 +242,33 @@
     var audioUnlocked = false;
     function unlockAudio() {
         if (audioUnlocked) return;
-        var audios = ['audioCoinout','audioCoinin','audioKritis'];
-        audios.forEach(function(id) {
-            var a = document.getElementById(id);
-            if (a) {
-                a.volume = 0;
-                a.play().then(function() { a.pause(); a.currentTime = 0; a.volume = 1; }).catch(function(){});
-            }
-        });
+        try {
+            var a = new Audio(AUDIO_URL.coinout);
+            a.volume = 0;
+            a.play().then(function() { a.pause(); }).catch(function(){});
+        } catch(e) {}
         audioUnlocked = true;
     }
 
     function playCoinout() {
-        unlockAudio();
-        document.getElementById("audioCoinout").play().catch(function(){});
+        try {
+            var a = new Audio(AUDIO_URL.coinout);
+            a.play().catch(function(){});
+        } catch(e) {}
     }
     function playCoinin() {
         unlockAudio();
-        document.getElementById("audioCoinin").play().catch(function(){});
+        try {
+            var a = new Audio(AUDIO_URL.coinin);
+            a.play().catch(function(){});
+        } catch(e) {}
     }
     function playKritis() {
         unlockAudio();
-        document.getElementById("audioKritis").play().catch(function(){});
+        try {
+            var a = new Audio(AUDIO_URL.kritis);
+            a.play().catch(function(){});
+        } catch(e) {}
     }
 
     function content() {
@@ -287,6 +293,7 @@
         e.preventDefault();
         var val = $("input[name=c]").val();
         if (val == "") return;
+        playCoinout();
         $.ajax({
             url: $(this).attr('action'),
             data: $(this).serialize(),

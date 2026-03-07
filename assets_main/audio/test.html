@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html>
+<head><title>Test Audio</title></head>
+<body>
+<h3>Test Audio</h3>
+<p>Klik tombol untuk test. Jika bunyi = path benar.</p>
+<button onclick="test('coinout.wav')">Test Coinout</button>
+<button onclick="test('coinin.wav')">Test Coinin</button>
+<button onclick="test('kritis.wav')">Test Kritis</button>
+<script>
+function test(file) {
+    var url = './' + file;
+    var a = new Audio(url);
+    a.play().then(function() { alert('OK: ' + file); }).catch(function(e) { alert('Error: ' + e.message); });
+}
+</script>
+</body>
+</html>
