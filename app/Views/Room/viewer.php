@@ -263,11 +263,23 @@
             a.play().catch(function(){});
         } catch(e) {}
     }
-    function playKritis() {
+    var kritisAudio = null;
+    var kritisPlaying = false;
+    function startKritisLoop() {
+        if (kritisPlaying) return;
         unlockAudio();
         try {
-            var a = new Audio(AUDIO_URL.kritis);
-            a.play().catch(function(){});
+            kritisAudio = kritisAudio || new Audio(AUDIO_URL.kritis);
+            kritisAudio.loop = true;
+            kritisAudio.play().then(function() { kritisPlaying = true; }).catch(function(){});
+        } catch(e) {}
+    }
+    function stopKritisLoop() {
+        if (!kritisPlaying || !kritisAudio) return;
+        try {
+            kritisAudio.pause();
+            kritisAudio.currentTime = 0;
+            kritisPlaying = false;
         } catch(e) {}
     }
 
@@ -275,11 +287,13 @@
         var oldChip = parseInt($(".chip-box.me .value").text().replace(/,/g, '')) || 0;
         $("#content").load('<?= $this->BASE_URL ?><?= $data['page'] ?>/content', function() {
             var newChip = parseInt($(".chip-box.me .value").text().replace(/,/g, '')) || 0;
+            if (newChip <= 300) {
+                startKritisLoop();
+            } else {
+                stopKritisLoop();
+            }
             if (oldChip > 0) {
                 if (newChip > oldChip) playCoinin();
-                else if (oldChip > 300 && newChip <= 300) playKritis();
-            } else if (oldChip === 0 && newChip <= 300) {
-                playKritis();
             }
         });
         mutasi();

@@ -1,6 +1,6 @@
 <!-- Main page content-->
 <?php
-$nameColors = ['#3b82f6', '#dc2626', '#22c55e', '#eab308', '#8b5cf6', '#ec4899', '#06b6d4', '#f97316'];
+$nameColors = ['#3b82f6', '#eab308', '#8b5cf6', '#ec4899', '#06b6d4', '#f97316', '#14b8a6', '#6366f1'];
 ?>
 <style>
     .blink_me { animation: blinker 0.7s linear infinite; }
