@@ -134,10 +134,12 @@
         <source src="<?= $this->ASSETS_URL ?>audio/coinout.wav" type="audio/wav">
     </audio>
     <audio id="audioCoinin" preload="auto">
-        <source src="<?= $this->ASSETS_URL ?>audio/coinin.mpeg" type="audio/mpeg">
+        <source src="<?= $this->ASSETS_URL ?>audio/coinin.mp3" type="audio/mpeg">
+        <source src="<?= $this->ASSETS_URL ?>audio/coinin.wav" type="audio/wav">
     </audio>
     <audio id="audioKritis" preload="auto">
-        <source src="<?= $this->ASSETS_URL ?>audio/kritis.mpeg" type="audio/mpeg">
+        <source src="<?= $this->ASSETS_URL ?>audio/kritis.mp3" type="audio/mpeg">
+        <source src="<?= $this->ASSETS_URL ?>audio/kritis.wav" type="audio/wav">
     </audio>
 
     <div class="header-row">
@@ -202,6 +204,7 @@
 
     $(document).ready(function() {
         content();
+        $(document).one("click touchstart", function() { unlockAudio(); });
 
         $("#offcanvasClose, #offcanvasBackdrop").on("click", closeOffcanvas);
 
@@ -235,14 +238,31 @@
         $("#server_status").removeClass("connected").text("Server \u2718");
     };
 
+    var audioUnlocked = false;
+    function unlockAudio() {
+        if (audioUnlocked) return;
+        var audios = ['audioCoinout','audioCoinin','audioKritis'];
+        audios.forEach(function(id) {
+            var a = document.getElementById(id);
+            if (a) {
+                a.volume = 0;
+                a.play().then(function() { a.pause(); a.currentTime = 0; a.volume = 1; }).catch(function(){});
+            }
+        });
+        audioUnlocked = true;
+    }
+
     function playCoinout() {
-        document.getElementById("audioCoinout").play();
+        unlockAudio();
+        document.getElementById("audioCoinout").play().catch(function(){});
     }
     function playCoinin() {
-        document.getElementById("audioCoinin").play();
+        unlockAudio();
+        document.getElementById("audioCoinin").play().catch(function(){});
     }
     function playKritis() {
-        document.getElementById("audioKritis").play();
+        unlockAudio();
+        document.getElementById("audioKritis").play().catch(function(){});
     }
 
     function content() {
@@ -252,6 +272,8 @@
             if (oldChip > 0) {
                 if (newChip > oldChip) playCoinin();
                 else if (oldChip > 300 && newChip <= 300) playKritis();
+            } else if (oldChip === 0 && newChip <= 300) {
+                playKritis();
             }
         });
         mutasi();
