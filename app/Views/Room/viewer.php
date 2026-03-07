@@ -15,17 +15,26 @@
             --chip-primary: #3b82f6; --chip-warning: #eab308;
         }
         * { margin: 0; padding: 0; box-sizing: border-box; }
-        html { height: 100%; }
+        html { height: 100%; min-height: 100%; }
         body {
             max-width: 560px;
             margin: 0 auto;
             padding: 0 1.25rem;
             font-family: 'DM Sans', -apple-system, sans-serif;
             background: var(--chip-bg);
+            background-image: 
+                radial-gradient(ellipse 120% 80% at 50% -20%, rgba(99,102,241,0.12), transparent 50%),
+                radial-gradient(ellipse 80% 50% at 100% 50%, rgba(139,92,246,0.08), transparent 50%),
+                radial-gradient(ellipse 80% 50% at 0% 80%, rgba(59,130,246,0.06), transparent 50%);
             color: var(--chip-text);
             -webkit-font-smoothing: antialiased;
+            min-height: 100vh;
         }
-        .header-row { display: flex; justify-content: space-between; align-items: center; margin-top: 0.75rem; }
+        .header-row { 
+            display: flex; justify-content: space-between; align-items: center; 
+            margin-top: 0.75rem; 
+            padding: 0.5rem 0;
+        }
         .btn-logout {
             font-size: 0.8125rem;
             color: var(--chip-muted);
@@ -56,10 +65,11 @@
             width: 100%;
             max-width: 560px;
             height: 450px;
-            background: var(--chip-card);
+            background: linear-gradient(180deg, #151518 0%, #111113 100%);
             border: 1px solid var(--chip-border);
             border-bottom: none;
             border-radius: 16px 16px 0 0;
+            box-shadow: 0 -4px 24px rgba(0,0,0,0.3);
             z-index: 1001;
             transition: transform 0.3s ease;
             overflow: hidden;
@@ -97,7 +107,11 @@
             border-radius: 10px;
             color: var(--chip-text);
         }
-        .transfer-input:focus { outline: none; border-color: rgba(255,255,255,0.15); }
+        .transfer-input:focus { 
+            outline: none; 
+            border-color: rgba(99,102,241,0.5);
+            box-shadow: 0 0 0 2px rgba(99,102,241,0.15);
+        }
         .transfer-input::-webkit-outer-spin-button,
         .transfer-input::-webkit-inner-spin-button { -webkit-appearance: none; margin: 0; }
         .fast-chip-row { display: flex; gap: 0.5rem; margin-top: 1rem; }
@@ -119,13 +133,18 @@
             padding: 1rem 1.5rem;
             font-size: 1rem;
             font-weight: 600;
-            background: var(--chip-danger);
+            background: linear-gradient(135deg, #dc2626 0%, #b91c1c 100%);
             border: none;
             border-radius: 10px;
             color: white;
             cursor: pointer;
+            box-shadow: 0 4px 14px rgba(220,38,38,0.3);
         }
         .btn-transfer:hover { opacity: 0.9; }
+        .fast-chip-btn:hover {
+            background: linear-gradient(135deg, rgba(99,102,241,0.15) 0%, rgba(139,92,246,0.1) 100%);
+            border-color: rgba(99,102,241,0.3);
+        }
     </style>
 </head>
 

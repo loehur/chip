@@ -1,6 +1,6 @@
 <!-- Main page content-->
 <div style="margin-top: 0;">
-    <div style="background: #111113; border: 1px solid rgba(255,255,255,0.06); border-radius: 12px; padding: 0.75rem; overflow: hidden;">
+    <div style="background: linear-gradient(145deg, #151518 0%, #111113 100%); border: 1px solid rgba(255,255,255,0.06); border-radius: 12px; padding: 0.75rem; overflow: hidden; box-shadow: 0 2px 12px rgba(0,0,0,0.2);">
         <table style="width: 100%; color: #fafafa; border-collapse: separate; border-spacing: 0 1rem; font-size: 0.875rem;">
             <?php
             $c = $data['chip'];

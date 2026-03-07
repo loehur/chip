@@ -7,12 +7,13 @@ $nameColors = ['#3b82f6', '#eab308', '#8b5cf6', '#ec4899', '#06b6d4', '#f97316',
     @keyframes blinker { 50% { opacity: 0; } }
     .chip-me-section { padding: 0.5rem 0 1rem; }
     .chip-box.me {
-        background: rgba(34,197,94,0.08);
-        border: 1px solid rgba(34,197,94,0.25);
+        background: linear-gradient(135deg, rgba(59,130,246,0.12) 0%, rgba(99,102,241,0.08) 50%, rgba(139,92,246,0.06) 100%);
+        border: 1px solid rgba(99,102,241,0.25);
         border-radius: 16px;
         padding: 1.75rem 1.5rem;
         text-align: center;
         width: 100%;
+        box-shadow: 0 4px 20px rgba(59,130,246,0.08);
     }
     .chip-box.me .name {
         font-size: 0.9375rem;
@@ -33,19 +34,20 @@ $nameColors = ['#3b82f6', '#eab308', '#8b5cf6', '#ec4899', '#06b6d4', '#f97316',
         gap: 1rem;
     }
     .chip-box {
-        background: var(--chip-card);
+        background: linear-gradient(145deg, #131315 0%, #0f0f11 100%);
         border: 1px solid var(--chip-border);
         border-radius: 12px;
         padding: 1.25rem 1rem;
         text-align: center;
-        transition: border-color 0.2s, background 0.2s;
+        transition: all 0.25s ease;
     }
     .chip-box.friend {
-        background: var(--chip-card);
+        background: linear-gradient(145deg, #151518 0%, #111113 100%);
     }
     .chip-box.friend:hover {
-        border-color: rgba(255,255,255,0.1);
-        background: #18181b;
+        border-color: rgba(99,102,241,0.2);
+        background: linear-gradient(145deg, rgba(99,102,241,0.08) 0%, rgba(139,92,246,0.05) 100%);
+        box-shadow: 0 4px 16px rgba(99,102,241,0.1);
     }
     .chip-box.friend .name {
         font-size: 0.9375rem;
