@@ -15,26 +15,27 @@ $rankMedals = ['🥇', '🥈', '🥉'];
         align-items: center;
         gap: 0.75rem;
         padding: 0.75rem 0.875rem;
-        background: linear-gradient(145deg, #141418 0%, #101012 100%);
-        border: 1px solid rgba(255,255,255,0.05);
+        background: linear-gradient(145deg, #ffffff 0%, #f8fafc 100%);
+        border: 1px solid rgba(15,23,42,0.07);
         border-radius: 12px;
         transition: all 0.25s ease;
         animation: lbIn 0.4s ease backwards;
+        box-shadow: 0 1px 2px rgba(15,23,42,0.03);
     }
-    .lb-item:nth-child(1) { animation-delay: 0.02s; border-color: rgba(234,179,8,0.25); background: linear-gradient(145deg, rgba(234,179,8,0.08) 0%, #101012 100%); }
-    .lb-item:nth-child(2) { animation-delay: 0.06s; border-color: rgba(161,161,170,0.2); }
-    .lb-item:nth-child(3) { animation-delay: 0.1s; border-color: rgba(180,83,9,0.2); }
+    .lb-item:nth-child(1) { animation-delay: 0.02s; border-color: rgba(234,179,8,0.35); background: linear-gradient(145deg, rgba(254,243,199,0.5) 0%, #ffffff 100%); }
+    .lb-item:nth-child(2) { animation-delay: 0.06s; border-color: rgba(148,163,184,0.35); }
+    .lb-item:nth-child(3) { animation-delay: 0.1s; border-color: rgba(180,83,9,0.25); background: linear-gradient(145deg, rgba(254,237,213,0.4) 0%, #ffffff 100%); }
     @keyframes lbIn {
         from { opacity: 0; transform: translateY(10px); }
         to { opacity: 1; transform: translateY(0); }
     }
-    .lb-item:hover { border-color: rgba(129,140,248,0.25); transform: translateX(2px); }
+    .lb-item:hover { border-color: rgba(99,102,241,0.3); transform: translateX(2px); box-shadow: 0 4px 12px rgba(99,102,241,0.08); }
     .lb-rank {
         width: 28px;
         text-align: center;
         font-size: 1rem;
         font-weight: 700;
-        color: #52525b;
+        color: #94a3b8;
         flex-shrink: 0;
     }
     .lb-rank.top { font-size: 1.25rem; }
@@ -61,7 +62,7 @@ $rankMedals = ['🥇', '🥈', '🥉'];
     }
     .lb-bar-wrap {
         height: 4px;
-        background: rgba(255,255,255,0.06);
+        background: #e2e8f0;
         border-radius: 2px;
         margin-top: 0.375rem;
         overflow: hidden;
@@ -79,16 +80,17 @@ $rankMedals = ['🥇', '🥈', '🥉'];
         text-align: right;
         flex-shrink: 0;
         letter-spacing: -0.02em;
+        color: #0f172a;
     }
     .lb-chip.low {
-        color: #fbbf24;
+        color: #d97706;
         animation: blink 0.8s linear infinite;
     }
     @keyframes blink { 50% { opacity: 0.4; } }
     .lb-empty {
         text-align: center;
         padding: 2rem;
-        color: #52525b;
+        color: #94a3b8;
         font-size: 0.875rem;
     }
 </style>

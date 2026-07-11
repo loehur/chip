@@ -9,16 +9,16 @@
     <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700&family=JetBrains+Mono:wght@500;600;700&display=swap" rel="stylesheet">
     <style>
         :root {
-            --w-bg: #050506;
-            --w-surface: #0f0f11;
-            --w-surface-2: #16161a;
-            --w-border: rgba(255,255,255,0.06);
-            --w-text: #fafafa;
-            --w-muted: #71717a;
-            --w-accent: #818cf8;
-            --w-success: #34d399;
-            --w-danger: #f87171;
-            --w-warning: #fbbf24;
+            --w-bg: #f4f6fb;
+            --w-surface: #ffffff;
+            --w-surface-2: #f8fafc;
+            --w-border: rgba(15,23,42,0.08);
+            --w-text: #0f172a;
+            --w-muted: #64748b;
+            --w-accent: #4f46e5;
+            --w-success: #16a34a;
+            --w-danger: #dc2626;
+            --w-warning: #d97706;
             --w-radius: 14px;
             --w-max: 1100px;
             --w-font: 'DM Sans', -apple-system, sans-serif;
@@ -39,9 +39,9 @@
             position: fixed;
             inset: 0;
             background:
-                radial-gradient(ellipse 80% 50% at 20% -10%, rgba(129,140,248,0.14), transparent 55%),
-                radial-gradient(ellipse 60% 40% at 90% 10%, rgba(167,139,250,0.1), transparent 50%),
-                radial-gradient(ellipse 50% 30% at 50% 100%, rgba(52,211,153,0.06), transparent 50%);
+                radial-gradient(ellipse 80% 50% at 20% -10%, rgba(99,102,241,0.1), transparent 55%),
+                radial-gradient(ellipse 60% 40% at 90% 10%, rgba(168,85,247,0.07), transparent 50%),
+                radial-gradient(ellipse 50% 30% at 50% 100%, rgba(34,197,94,0.05), transparent 50%);
             pointer-events: none;
             z-index: 0;
         }
@@ -67,7 +67,7 @@
             justify-content: space-between;
             gap: 0.75rem;
             padding: 1rem 0;
-            background: linear-gradient(180deg, var(--w-bg) 65%, transparent);
+            background: linear-gradient(180deg, rgba(244,246,251,0.95) 65%, transparent);
             backdrop-filter: blur(16px);
             -webkit-backdrop-filter: blur(16px);
         }
@@ -82,7 +82,8 @@
             justify-content: center;
             font-weight: 800;
             font-size: 1.25rem;
-            box-shadow: 0 4px 20px rgba(99,102,241,0.4);
+            color: #fff;
+            box-shadow: 0 4px 16px rgba(99,102,241,0.3);
         }
         .watch-title h1 {
             font-size: 1.25rem;
@@ -113,15 +114,15 @@
             font-weight: 700;
             text-transform: uppercase;
             letter-spacing: 0.05em;
-            background: rgba(248,113,113,0.12);
+            background: rgba(220,38,38,0.08);
             color: var(--w-danger);
-            border: 1px solid rgba(248,113,113,0.25);
+            border: 1px solid rgba(220,38,38,0.18);
             transition: all 0.3s ease;
         }
         .live-pill.on {
-            background: rgba(52,211,153,0.12);
+            background: rgba(22,163,74,0.1);
             color: var(--w-success);
-            border-color: rgba(52,211,153,0.3);
+            border-color: rgba(22,163,74,0.25);
         }
         .live-pill .dot {
             width: 7px;
@@ -147,8 +148,8 @@
             transition: all 0.2s ease;
         }
         .btn-login-link:hover {
-            border-color: rgba(129,140,248,0.4);
-            background: rgba(99,102,241,0.1);
+            border-color: rgba(79,70,229,0.35);
+            background: rgba(99,102,241,0.06);
         }
 
         /* Stats bar */
@@ -168,6 +169,7 @@
             padding: 0.875rem 0.75rem;
             text-align: center;
             transition: border-color 0.2s;
+            box-shadow: 0 1px 3px rgba(15,23,42,0.04);
         }
         @media (min-width: 640px) {
             .stat-card { padding: 1rem; }
@@ -211,6 +213,7 @@
             border: 1px solid var(--w-border);
             border-radius: 18px;
             overflow: hidden;
+            box-shadow: 0 2px 8px rgba(15,23,42,0.04);
         }
         .panel-head {
             display: flex;
@@ -218,7 +221,7 @@
             justify-content: space-between;
             padding: 1rem 1.125rem;
             border-bottom: 1px solid var(--w-border);
-            background: rgba(255,255,255,0.02);
+            background: var(--w-surface-2);
         }
         .panel-head h2 {
             font-size: 0.875rem;
@@ -262,8 +265,9 @@
             transition: all 0.2s ease;
         }
         .watch-tab.active {
-            color: var(--w-text);
-            background: rgba(99,102,241,0.15);
+            color: var(--w-accent);
+            background: rgba(99,102,241,0.1);
+            box-shadow: 0 1px 2px rgba(15,23,42,0.04);
         }
         .watch-mobile-panel { display: none; }
         .watch-mobile-panel.active { display: block; }
@@ -275,7 +279,7 @@
 
         /* Skeleton */
         .skel {
-            background: linear-gradient(90deg, var(--w-surface-2) 25%, #1e1e24 50%, var(--w-surface-2) 75%);
+            background: linear-gradient(90deg, #e2e8f0 25%, #f1f5f9 50%, #e2e8f0 75%);
             background-size: 200% 100%;
             animation: shimmer 1.4s infinite;
             border-radius: 10px;
@@ -293,7 +297,7 @@
             text-align: center;
             padding: 1.5rem 0 0.5rem;
             font-size: 0.75rem;
-            color: #3f3f46;
+            color: #94a3b8;
         }
     </style>
 </head>
