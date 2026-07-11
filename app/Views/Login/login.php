@@ -137,6 +137,7 @@
             <button type="submit" class="btn-login">Login</button>
         </form>
         <a href="<?= $this->BASE_URL ?>Admin" class="admin-link">Admin Menu</a>
+        <a href="<?= $this->BASE_URL ?>Watch" class="admin-link" style="margin-top:0.5rem">Tonton Live (Penonton)</a>
     </div>
 </div>
 
