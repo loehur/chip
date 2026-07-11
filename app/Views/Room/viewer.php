@@ -2,149 +2,424 @@
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-    <title>Chip</title>
+    <title>Chip Viewer</title>
     <link rel="icon" type="image/x-icon" href="<?= $this->ASSETS_URL ?>img/favicon.png" />
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=JetBrains+Mono:wght@500;600;700&display=swap" rel="stylesheet">
     <style>
         :root {
-            --chip-bg: #0a0a0b; --chip-card: #111113; --chip-input: #1c1c1f;
-            --chip-border: rgba(255,255,255,0.06); --chip-text: #fafafa;
-            --chip-muted: #71717a; --chip-success: #22c55e; --chip-danger: #dc2626;
-            --chip-primary: #3b82f6; --chip-warning: #eab308;
+            --chip-bg: #070708;
+            --chip-surface: #111113;
+            --chip-surface-2: #18181b;
+            --chip-input: #1c1c1f;
+            --chip-border: rgba(255,255,255,0.06);
+            --chip-border-hover: rgba(255,255,255,0.12);
+            --chip-text: #fafafa;
+            --chip-muted: #71717a;
+            --chip-success: #22c55e;
+            --chip-danger: #ef4444;
+            --chip-primary: #6366f1;
+            --chip-warning: #f59e0b;
+            --chip-glow: rgba(99,102,241,0.35);
+            --chip-radius: 12px;
+            --chip-radius-lg: 20px;
+            --chip-font: 'DM Sans', -apple-system, sans-serif;
+            --chip-mono: 'JetBrains Mono', monospace;
+            --viewer-max: 560px;
         }
         * { margin: 0; padding: 0; box-sizing: border-box; }
-        html { height: 100%; min-height: 100%; }
+        html { height: 100%; scroll-behavior: smooth; }
         body {
-            max-width: 560px;
-            margin: 0 auto;
-            padding: 0 1.25rem;
-            font-family: 'DM Sans', -apple-system, sans-serif;
+            font-family: var(--chip-font);
             background: var(--chip-bg);
-            background-image: 
-                radial-gradient(ellipse 120% 80% at 50% -20%, rgba(99,102,241,0.12), transparent 50%),
-                radial-gradient(ellipse 80% 50% at 100% 50%, rgba(139,92,246,0.08), transparent 50%),
-                radial-gradient(ellipse 80% 50% at 0% 80%, rgba(59,130,246,0.06), transparent 50%);
             color: var(--chip-text);
             -webkit-font-smoothing: antialiased;
             min-height: 100vh;
+            overflow-x: hidden;
         }
-        .header-row { 
-            display: flex; justify-content: space-between; align-items: center; 
-            margin-top: 0.75rem; 
-            padding: 0.5rem 0;
+        body::before {
+            content: '';
+            position: fixed;
+            inset: 0;
+            background:
+                radial-gradient(ellipse 90% 60% at 50% -10%, rgba(99,102,241,0.18), transparent 55%),
+                radial-gradient(ellipse 60% 40% at 100% 20%, rgba(139,92,246,0.1), transparent 50%),
+                radial-gradient(ellipse 50% 40% at 0% 90%, rgba(59,130,246,0.08), transparent 50%);
+            pointer-events: none;
+            z-index: 0;
+        }
+        .viewer-app {
+            position: relative;
+            z-index: 1;
+            max-width: var(--viewer-max);
+            margin: 0 auto;
+            padding: 0 1rem 6rem;
+            min-height: 100vh;
+        }
+        @media (min-width: 768px) {
+            :root { --viewer-max: 720px; }
+            .viewer-app { padding: 0 1.5rem 6rem; }
+        }
+        @media (min-width: 1024px) {
+            :root { --viewer-max: 900px; }
+        }
+
+        /* Header */
+        .viewer-header {
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 0.75rem;
+            padding: 0.875rem 0;
+            margin-bottom: 0.5rem;
+            background: linear-gradient(180deg, var(--chip-bg) 70%, transparent);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+        }
+        .viewer-brand {
+            display: flex;
+            align-items: center;
+            gap: 0.625rem;
+        }
+        .viewer-logo {
+            width: 36px;
+            height: 36px;
+            border-radius: 10px;
+            background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 50%, #a855f7 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.125rem;
+            font-weight: 700;
+            box-shadow: 0 4px 16px rgba(99,102,241,0.35);
+        }
+        .viewer-brand-text h1 {
+            font-size: 1.125rem;
+            font-weight: 700;
+            letter-spacing: -0.02em;
+            line-height: 1.2;
+        }
+        .viewer-brand-text span {
+            font-size: 0.6875rem;
+            color: var(--chip-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.06em;
+        }
+        .viewer-header-actions {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        .live-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.375rem;
+            padding: 0.375rem 0.625rem;
+            border-radius: 999px;
+            font-size: 0.6875rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.04em;
+            background: rgba(239,68,68,0.12);
+            color: #f87171;
+            border: 1px solid rgba(239,68,68,0.2);
+            transition: all 0.3s ease;
+        }
+        .live-badge.connected {
+            background: rgba(34,197,94,0.12);
+            color: var(--chip-success);
+            border-color: rgba(34,197,94,0.25);
+        }
+        .live-dot {
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background: currentColor;
+        }
+        .live-badge.connected .live-dot {
+            animation: pulse-dot 2s ease-in-out infinite;
+        }
+        @keyframes pulse-dot {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.5; transform: scale(1.3); }
         }
         .btn-logout {
-            font-size: 0.8125rem;
+            padding: 0.375rem 0.75rem;
+            font-size: 0.75rem;
+            font-weight: 500;
             color: var(--chip-muted);
-            background: none;
-            border: none;
+            background: var(--chip-surface);
+            border: 1px solid var(--chip-border);
+            border-radius: 8px;
             cursor: pointer;
             text-decoration: none;
             font-family: inherit;
+            transition: all 0.2s ease;
         }
-        .btn-logout:hover { color: var(--chip-text); }
-        .server-status { font-size: 0.8125rem; color: var(--chip-muted); }
-        .server-status.connected { color: var(--chip-success); }
-        #content { margin-top: 1.5rem; }
-        #mutasi { margin-top: 1rem; }
+        .btn-logout:hover {
+            color: var(--chip-text);
+            border-color: var(--chip-border-hover);
+            background: var(--chip-surface-2);
+        }
+
+        /* Tab navigation */
+        .viewer-tabs {
+            display: flex;
+            gap: 0.375rem;
+            padding: 0.25rem;
+            background: var(--chip-surface);
+            border: 1px solid var(--chip-border);
+            border-radius: var(--chip-radius);
+            margin-bottom: 1.25rem;
+        }
+        .viewer-tab {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.375rem;
+            padding: 0.625rem 0.75rem;
+            font-size: 0.8125rem;
+            font-weight: 600;
+            font-family: inherit;
+            color: var(--chip-muted);
+            background: transparent;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.25s ease;
+        }
+        .viewer-tab svg { opacity: 0.6; transition: opacity 0.2s; }
+        .viewer-tab:hover { color: var(--chip-text); }
+        .viewer-tab.active {
+            color: var(--chip-text);
+            background: linear-gradient(135deg, rgba(99,102,241,0.2) 0%, rgba(139,92,246,0.12) 100%);
+            box-shadow: 0 2px 8px rgba(99,102,241,0.15);
+        }
+        .viewer-tab.active svg { opacity: 1; }
+
+        /* Panels */
+        .viewer-panel { display: none; animation: fadeSlideIn 0.35s ease; }
+        .viewer-panel.active { display: block; }
+        @keyframes fadeSlideIn {
+            from { opacity: 0; transform: translateY(8px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Loading skeleton */
+        .skeleton-wrap { padding: 0.5rem 0; }
+        .skeleton-hero {
+            height: 140px;
+            border-radius: var(--chip-radius-lg);
+            background: linear-gradient(90deg, var(--chip-surface) 25%, var(--chip-surface-2) 50%, var(--chip-surface) 75%);
+            background-size: 200% 100%;
+            animation: shimmer 1.5s infinite;
+            margin-bottom: 1rem;
+        }
+        .skeleton-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 0.75rem;
+        }
+        @media (min-width: 768px) {
+            .skeleton-grid { grid-template-columns: repeat(3, 1fr); }
+        }
+        .skeleton-card {
+            height: 88px;
+            border-radius: var(--chip-radius);
+            background: linear-gradient(90deg, var(--chip-surface) 25%, var(--chip-surface-2) 50%, var(--chip-surface) 75%);
+            background-size: 200% 100%;
+            animation: shimmer 1.5s infinite;
+        }
+        @keyframes shimmer {
+            0% { background-position: 200% 0; }
+            100% { background-position: -200% 0; }
+        }
+        .loading .skeleton-wrap { display: block; }
+        .loading #content > :not(.skeleton-wrap),
+        .loading #mutasi > :not(.skeleton-wrap) { display: none !important; }
+        .skeleton-wrap { display: none; }
+
+        /* Section title */
+        .section-label {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            color: var(--chip-muted);
+            margin-bottom: 0.75rem;
+        }
+        .section-label::after {
+            content: '';
+            flex: 1;
+            height: 1px;
+            background: var(--chip-border);
+        }
+
+        /* Offcanvas */
         .offcanvas-backdrop {
             display: none;
             position: fixed;
             inset: 0;
-            background: rgba(0,0,0,0.5);
+            background: rgba(0,0,0,0.6);
+            backdrop-filter: blur(4px);
             z-index: 1000;
+            opacity: 0;
+            transition: opacity 0.3s ease;
         }
-        .offcanvas-backdrop.show { display: block; }
+        .offcanvas-backdrop.show {
+            display: block;
+            opacity: 1;
+        }
         .offcanvas-panel {
             position: fixed;
             bottom: 0;
             left: 50%;
             transform: translateX(-50%) translateY(100%);
             width: 100%;
-            max-width: 560px;
-            height: 450px;
-            background: linear-gradient(180deg, #151518 0%, #111113 100%);
+            max-width: var(--viewer-max);
+            background: linear-gradient(180deg, #1a1a1e 0%, #111113 100%);
             border: 1px solid var(--chip-border);
             border-bottom: none;
-            border-radius: 16px 16px 0 0;
-            box-shadow: 0 -4px 24px rgba(0,0,0,0.3);
+            border-radius: var(--chip-radius-lg) var(--chip-radius-lg) 0 0;
+            box-shadow: 0 -8px 40px rgba(0,0,0,0.5), 0 0 60px rgba(99,102,241,0.08);
             z-index: 1001;
-            transition: transform 0.3s ease;
+            transition: transform 0.35s cubic-bezier(0.32, 0.72, 0, 1);
             overflow: hidden;
         }
         .offcanvas-panel.show { transform: translateX(-50%) translateY(0); }
+        .offcanvas-handle {
+            width: 36px;
+            height: 4px;
+            background: rgba(255,255,255,0.15);
+            border-radius: 2px;
+            margin: 0.75rem auto 0;
+        }
         .offcanvas-header {
             display: flex;
             justify-content: space-between;
             align-items: flex-start;
-            padding: 1rem 1.25rem;
-            border-bottom: 1px solid var(--chip-border);
+            padding: 1rem 1.25rem 0.75rem;
         }
-        .offcanvas-title { font-size: 1rem; font-weight: 500; color: var(--chip-text); }
-        .offcanvas-title b { color: var(--chip-danger); }
-        .btn-close {
-            width: 32px;
-            height: 32px;
-            background: transparent;
-            border: none;
+        .offcanvas-title {
+            font-size: 0.9375rem;
+            font-weight: 500;
             color: var(--chip-muted);
-            font-size: 1.5rem;
-            line-height: 1;
-            cursor: pointer;
+            line-height: 1.5;
         }
-        .btn-close:hover { color: var(--chip-text); }
-        .offcanvas-body { padding: 1rem 1.25rem; }
+        .offcanvas-title b {
+            display: block;
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: var(--chip-danger);
+            margin-top: 0.125rem;
+        }
+        .btn-close {
+            width: 36px;
+            height: 36px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: var(--chip-surface);
+            border: 1px solid var(--chip-border);
+            border-radius: 10px;
+            color: var(--chip-muted);
+            font-size: 1.25rem;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+        .btn-close:hover {
+            color: var(--chip-text);
+            border-color: var(--chip-border-hover);
+        }
+        .offcanvas-body { padding: 0.75rem 1.25rem 1.5rem; }
         .transfer-input {
             width: 100%;
-            height: 100px;
+            height: 96px;
             padding: 0 1rem;
+            font-family: var(--chip-mono);
             font-size: 2.5rem;
+            font-weight: 600;
             text-align: center;
             background: var(--chip-input);
             border: 1px solid var(--chip-border);
-            border-radius: 10px;
+            border-radius: var(--chip-radius);
             color: var(--chip-text);
+            transition: all 0.2s ease;
         }
-        .transfer-input:focus { 
-            outline: none; 
+        .transfer-input:focus {
+            outline: none;
             border-color: rgba(99,102,241,0.5);
-            box-shadow: 0 0 0 2px rgba(99,102,241,0.15);
+            box-shadow: 0 0 0 3px rgba(99,102,241,0.15);
         }
         .transfer-input::-webkit-outer-spin-button,
         .transfer-input::-webkit-inner-spin-button { -webkit-appearance: none; margin: 0; }
-        .fast-chip-row { display: flex; gap: 0.5rem; margin-top: 1rem; }
+        .fast-chip-row { display: flex; gap: 0.5rem; margin-top: 0.875rem; }
         .fast-chip-btn {
             flex: 1;
-            padding: 1rem;
-            font-size: 1.25rem;
+            padding: 0.875rem;
+            font-family: var(--chip-mono);
+            font-size: 1.125rem;
             font-weight: 600;
-            background: var(--chip-input);
+            background: var(--chip-surface);
             border: 1px solid var(--chip-border);
-            border-radius: 10px;
+            border-radius: var(--chip-radius);
             color: var(--chip-text);
             cursor: pointer;
+            transition: all 0.2s ease;
         }
-        .fast-chip-btn:hover { border-color: rgba(255,255,255,0.12); }
+        .fast-chip-btn:hover {
+            background: linear-gradient(135deg, rgba(99,102,241,0.15) 0%, rgba(139,92,246,0.1) 100%);
+            border-color: rgba(99,102,241,0.35);
+            transform: translateY(-1px);
+        }
         .btn-transfer {
             width: 100%;
-            margin-top: 1rem;
+            margin-top: 0.875rem;
             padding: 1rem 1.5rem;
             font-size: 1rem;
             font-weight: 600;
-            background: linear-gradient(135deg, #dc2626 0%, #b91c1c 100%);
+            font-family: inherit;
+            background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
             border: none;
-            border-radius: 10px;
+            border-radius: var(--chip-radius);
             color: white;
             cursor: pointer;
-            box-shadow: 0 4px 14px rgba(220,38,38,0.3);
+            box-shadow: 0 4px 20px rgba(239,68,68,0.35);
+            transition: all 0.2s ease;
         }
-        .btn-transfer:hover { opacity: 0.9; }
-        .fast-chip-btn:hover {
-            background: linear-gradient(135deg, rgba(99,102,241,0.15) 0%, rgba(139,92,246,0.1) 100%);
-            border-color: rgba(99,102,241,0.3);
+        .btn-transfer:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 6px 24px rgba(239,68,68,0.45);
         }
+        .btn-transfer:active { transform: translateY(0); }
+
+        /* Toast */
+        .viewer-toast {
+            position: fixed;
+            bottom: 1.5rem;
+            left: 50%;
+            transform: translateX(-50%) translateY(120%);
+            padding: 0.75rem 1.25rem;
+            background: var(--chip-surface-2);
+            border: 1px solid var(--chip-border);
+            border-radius: 999px;
+            font-size: 0.8125rem;
+            font-weight: 500;
+            color: var(--chip-text);
+            box-shadow: 0 8px 32px rgba(0,0,0,0.4);
+            z-index: 2000;
+            transition: transform 0.35s cubic-bezier(0.32, 0.72, 0, 1);
+            white-space: nowrap;
+        }
+        .viewer-toast.show { transform: translateX(-50%) translateY(0); }
     </style>
 </head>
 
@@ -162,22 +437,72 @@
         })();
     </script>
 
-    <div class="header-row">
-        <a href="<?= $this->BASE_URL ?>Room/logout" class="btn-logout">Logout</a>
-        <span class="server-status" id="server_status">Server &#10007;</span>
+    <div class="viewer-app">
+        <header class="viewer-header">
+            <div class="viewer-brand">
+                <div class="viewer-logo">C</div>
+                <div class="viewer-brand-text">
+                    <h1>Chip</h1>
+                    <span>Live Viewer</span>
+                </div>
+            </div>
+            <div class="viewer-header-actions">
+                <span class="live-badge" id="server_status">
+                    <span class="live-dot"></span>
+                    Offline
+                </span>
+                <a href="<?= $this->BASE_URL ?>Room/logout" class="btn-logout">Logout</a>
+            </div>
+        </header>
+
+        <nav class="viewer-tabs" role="tablist">
+            <button class="viewer-tab active" data-panel="saldo" role="tab" aria-selected="true">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 6v12M8 10h8M8 14h5"/></svg>
+                Saldo
+            </button>
+            <button class="viewer-tab" data-panel="riwayat" role="tab" aria-selected="false">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 8v4l3 3"/><circle cx="12" cy="12" r="10"/></svg>
+                Riwayat
+            </button>
+        </nav>
+
+        <div class="viewer-panel active" id="panel-saldo" role="tabpanel">
+            <div id="content" class="loading">
+                <div class="skeleton-wrap">
+                    <div class="skeleton-hero"></div>
+                    <div class="skeleton-grid">
+                        <div class="skeleton-card"></div>
+                        <div class="skeleton-card"></div>
+                        <div class="skeleton-card"></div>
+                        <div class="skeleton-card"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="viewer-panel" id="panel-riwayat" role="tabpanel">
+            <div class="section-label">Transaksi Terakhir</div>
+            <div id="mutasi" class="loading">
+                <div class="skeleton-wrap">
+                    <div class="skeleton-card" style="height:64px;margin-bottom:0.5rem"></div>
+                    <div class="skeleton-card" style="height:64px;margin-bottom:0.5rem"></div>
+                    <div class="skeleton-card" style="height:64px;margin-bottom:0.5rem"></div>
+                    <div class="skeleton-card" style="height:64px"></div>
+                </div>
+            </div>
+        </div>
     </div>
-    <div id="content"></div>
-    <div id="mutasi"></div>
 
     <div class="offcanvas-backdrop" id="offcanvasBackdrop"></div>
     <div class="offcanvas-panel" id="offcanvasBottom">
+        <div class="offcanvas-handle"></div>
         <div class="offcanvas-header">
-            <h5 class="offcanvas-title">Transfer Chip to<br><b id="target"></b></h5>
+            <h5 class="offcanvas-title">Transfer ke<b id="target">—</b></h5>
             <button type="button" class="btn-close" id="offcanvasClose">&times;</button>
         </div>
         <div class="offcanvas-body">
             <form action="<?= $this->BASE_URL ?>Room/transfer" method="POST" id="transferForm">
-                <input name="c" type="number" class="transfer-input" placeholder="0">
+                <input name="c" type="number" class="transfer-input" placeholder="0" inputmode="numeric">
                 <input name="t" type="hidden">
                 <div class="fast-chip-row">
                     <?php
@@ -190,13 +515,15 @@
                     arsort($counts);
                     $top2 = array_slice(array_keys($counts), 0, 2);
                     foreach ($top2 as $chip) { ?>
-                        <button type="button" class="fast-chip-btn fastChip" data-chip="<?= $chip ?>"><?= $chip ?></button>
+                        <button type="button" class="fast-chip-btn fastChip" data-chip="<?= $chip ?>"><?= number_format($chip) ?></button>
                     <?php } ?>
                 </div>
-                <button type="submit" id="submit" class="btn-transfer">Transfer</button>
+                <button type="submit" id="submit" class="btn-transfer">Kirim Chip</button>
             </form>
         </div>
     </div>
+
+    <div class="viewer-toast" id="viewerToast"></div>
 </body>
 
 <script src="<?= $this->ASSETS_URL ?>jquery-3.7.0.min.js"></script>
@@ -204,6 +531,7 @@
 <script>
     var connect_stat = false;
     var pollTimeout;
+    var contentLoading = false;
 
     function schedulePoll() {
         clearTimeout(pollTimeout);
@@ -213,14 +541,30 @@
         }, 10000);
     }
 
+    function showToast(msg) {
+        var $t = $("#viewerToast");
+        $t.text(msg).addClass("show");
+        setTimeout(function() { $t.removeClass("show"); }, 2500);
+    }
+
     function openOffcanvas() {
         $("#offcanvasBackdrop").addClass("show");
         $("#offcanvasBottom").addClass("show");
+        document.body.style.overflow = "hidden";
     }
     function closeOffcanvas() {
         $("#offcanvasBackdrop").removeClass("show");
         $("#offcanvasBottom").removeClass("show");
+        document.body.style.overflow = "";
     }
+
+    $(".viewer-tab").on("click", function() {
+        var panel = $(this).data("panel");
+        $(".viewer-tab").removeClass("active").attr("aria-selected", "false");
+        $(this).addClass("active").attr("aria-selected", "true");
+        $(".viewer-panel").removeClass("active");
+        $("#panel-" + panel).addClass("active");
+    });
 
     $(document).ready(function() {
         content();
@@ -232,7 +576,9 @@
             var t = $(this).data("user");
             $("input[name=t]").val(t);
             $("#target").text(t.toUpperCase());
+            $("input[name=c]").val("");
             openOffcanvas();
+            setTimeout(function() { $("input[name=c]").focus(); }, 350);
         });
 
         $(".fastChip").on("click", function() {
@@ -242,20 +588,20 @@
     });
 
     var sock = new WebSocket('<?= $this->WS_SERV ?>');
-    sock.onopen = function(data) {
+    sock.onopen = function() {
         connect_stat = true;
-        $("#server_status").addClass("connected").text("Server \u2714");
+        $("#server_status").addClass("connected").html('<span class="live-dot"></span> Live');
         schedulePoll();
     };
-    sock.onmessage = function(event) {
+    sock.onmessage = function() {
         content();
         schedulePoll();
     };
-    sock.onclose = function(event) {
+    sock.onclose = function() {
         connect_stat = false;
         clearTimeout(pollTimeout);
         setInterval(function() { content(); }, 3000);
-        $("#server_status").removeClass("connected").text("Server \u2718");
+        $("#server_status").removeClass("connected").html('<span class="live-dot"></span> Offline');
     };
 
     var audioUnlocked = false;
@@ -270,20 +616,13 @@
     }
 
     function playCoinout() {
-        try {
-            var a = new Audio(AUDIO_URL.coinout);
-            a.play().catch(function(){});
-        } catch(e) {}
+        try { new Audio(AUDIO_URL.coinout).play().catch(function(){}); } catch(e) {}
     }
     function playCoinin() {
         unlockAudio();
-        try {
-            var a = new Audio(AUDIO_URL.coinin);
-            a.play().catch(function(){});
-        } catch(e) {}
+        try { new Audio(AUDIO_URL.coinin).play().catch(function(){}); } catch(e) {}
     }
-    var kritisAudio = null;
-    var kritisPlaying = false;
+    var kritisAudio = null, kritisPlaying = false;
     function startKritisLoop() {
         if (kritisPlaying) return;
         unlockAudio();
@@ -302,42 +641,73 @@
         } catch(e) {}
     }
 
+    function animateValue($el, from, to) {
+        if (from === to) return;
+        var duration = 400;
+        var start = performance.now();
+        function step(now) {
+            var p = Math.min((now - start) / duration, 1);
+            var eased = 1 - Math.pow(1 - p, 3);
+            var val = Math.round(from + (to - from) * eased);
+            $el.text(val.toLocaleString());
+            if (p < 1) requestAnimationFrame(step);
+        }
+        requestAnimationFrame(step);
+    }
+
     function content() {
+        if (contentLoading) return;
+        contentLoading = true;
         var oldChip = parseInt($(".chip-box.me .value").text().replace(/,/g, '')) || 0;
         $("#content").load('<?= $this->BASE_URL ?><?= $data['page'] ?>/content', function() {
-            var newChip = parseInt($(".chip-box.me .value").text().replace(/,/g, '')) || 0;
-            if (newChip <= 300) {
-                startKritisLoop();
-            } else {
-                stopKritisLoop();
-            }
-            if (oldChip > 0) {
+            contentLoading = false;
+            $("#content").removeClass("loading");
+            var $meVal = $(".chip-box.me .value");
+            var newChip = parseInt($meVal.text().replace(/,/g, '')) || 0;
+            if (newChip <= 300) startKritisLoop(); else stopKritisLoop();
+            if (oldChip > 0 && newChip !== oldChip) {
                 if (newChip > oldChip) playCoinin();
+                animateValue($meVal, oldChip, newChip);
             }
         });
         mutasi();
     }
 
     function mutasi() {
-        $("#mutasi").load("<?= $this->BASE_URL ?>Room/cek");
+        $("#mutasi").load("<?= $this->BASE_URL ?>Room/cek", function() {
+            $("#mutasi").removeClass("loading");
+        });
     }
 
     $("#transferForm").on("submit", function(e) {
         e.preventDefault();
         var val = $("input[name=c]").val();
-        if (val == "") return;
+        if (val == "" || parseInt(val) <= 0) {
+            showToast("Masukkan jumlah chip");
+            return;
+        }
         playCoinout();
+        var $btn = $("#submit");
+        $btn.prop("disabled", true).text("Mengirim...");
         $.ajax({
             url: $(this).attr('action'),
             data: $(this).serialize(),
             type: $(this).attr("method"),
             success: function(res) {
+                $btn.prop("disabled", false).text("Kirim Chip");
                 if (res == 0) {
                     $("input[name=c]").val("");
                     closeOffcanvas();
                     content();
+                    showToast("Transfer berhasil!");
                     if (connect_stat === true) sock.send(JSON.stringify({ text: 0 }));
+                } else {
+                    showToast("Transfer gagal");
                 }
+            },
+            error: function() {
+                $btn.prop("disabled", false).text("Kirim Chip");
+                showToast("Koneksi error");
             }
         });
     });
