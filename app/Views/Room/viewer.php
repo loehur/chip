@@ -203,46 +203,8 @@
         .viewer-tab.active svg { opacity: 1; }
 
         /* Panels */
-        .viewer-panel { display: none; animation: fadeSlideIn 0.35s ease; }
+        .viewer-panel { display: none; }
         .viewer-panel.active { display: block; }
-        @keyframes fadeSlideIn {
-            from { opacity: 0; transform: translateY(8px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        /* Loading skeleton */
-        .skeleton-wrap { padding: 0.5rem 0; }
-        .skeleton-hero {
-            height: 140px;
-            border-radius: var(--chip-radius-lg);
-            background: linear-gradient(90deg, var(--chip-surface) 25%, var(--chip-surface-2) 50%, var(--chip-surface) 75%);
-            background-size: 200% 100%;
-            animation: shimmer 1.5s infinite;
-            margin-bottom: 1rem;
-        }
-        .skeleton-grid {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 0.75rem;
-        }
-        @media (min-width: 768px) {
-            .skeleton-grid { grid-template-columns: repeat(3, 1fr); }
-        }
-        .skeleton-card {
-            height: 88px;
-            border-radius: var(--chip-radius);
-            background: linear-gradient(90deg, var(--chip-surface) 25%, var(--chip-surface-2) 50%, var(--chip-surface) 75%);
-            background-size: 200% 100%;
-            animation: shimmer 1.5s infinite;
-        }
-        @keyframes shimmer {
-            0% { background-position: 200% 0; }
-            100% { background-position: -200% 0; }
-        }
-        .loading .skeleton-wrap { display: block; }
-        .loading #content > :not(.skeleton-wrap),
-        .loading #mutasi > :not(.skeleton-wrap) { display: none !important; }
-        .skeleton-wrap { display: none; }
 
         /* Section title */
         .section-label {
@@ -280,16 +242,16 @@
         }
         .offcanvas-panel {
             position: fixed;
-            bottom: 0;
+            top: 0;
             left: 50%;
-            transform: translateX(-50%) translateY(100%);
+            transform: translateX(-50%) translateY(-100%);
             width: 100%;
             max-width: var(--viewer-max);
-            background: linear-gradient(180deg, #1a1a1e 0%, #111113 100%);
+            background: linear-gradient(180deg, #111113 0%, #1a1a1e 100%);
             border: 1px solid var(--chip-border);
-            border-bottom: none;
-            border-radius: var(--chip-radius-lg) var(--chip-radius-lg) 0 0;
-            box-shadow: 0 -8px 40px rgba(0,0,0,0.5), 0 0 60px rgba(99,102,241,0.08);
+            border-top: none;
+            border-radius: 0 0 var(--chip-radius-lg) var(--chip-radius-lg);
+            box-shadow: 0 8px 40px rgba(0,0,0,0.5), 0 0 60px rgba(99,102,241,0.08);
             z-index: 1001;
             transition: transform 0.35s cubic-bezier(0.32, 0.72, 0, 1);
             overflow: hidden;
@@ -300,7 +262,7 @@
             height: 4px;
             background: rgba(255,255,255,0.15);
             border-radius: 2px;
-            margin: 0.75rem auto 0;
+            margin: 0 auto 0.75rem;
         }
         .offcanvas-header {
             display: flex;
@@ -339,7 +301,7 @@
             color: var(--chip-text);
             border-color: var(--chip-border-hover);
         }
-        .offcanvas-body { padding: 0.75rem 1.25rem 1.5rem; }
+        .offcanvas-body { padding: 0.75rem 1.25rem 0.5rem; }
         .transfer-input {
             width: 100%;
             height: 96px;
@@ -467,35 +429,17 @@
         </nav>
 
         <div class="viewer-panel active" id="panel-saldo" role="tabpanel">
-            <div id="content" class="loading">
-                <div class="skeleton-wrap">
-                    <div class="skeleton-hero"></div>
-                    <div class="skeleton-grid">
-                        <div class="skeleton-card"></div>
-                        <div class="skeleton-card"></div>
-                        <div class="skeleton-card"></div>
-                        <div class="skeleton-card"></div>
-                    </div>
-                </div>
-            </div>
+            <div id="content"></div>
         </div>
 
         <div class="viewer-panel" id="panel-riwayat" role="tabpanel">
             <div class="section-label">Transaksi Terakhir</div>
-            <div id="mutasi" class="loading">
-                <div class="skeleton-wrap">
-                    <div class="skeleton-card" style="height:64px;margin-bottom:0.5rem"></div>
-                    <div class="skeleton-card" style="height:64px;margin-bottom:0.5rem"></div>
-                    <div class="skeleton-card" style="height:64px;margin-bottom:0.5rem"></div>
-                    <div class="skeleton-card" style="height:64px"></div>
-                </div>
-            </div>
+            <div id="mutasi"></div>
         </div>
     </div>
 
     <div class="offcanvas-backdrop" id="offcanvasBackdrop"></div>
-    <div class="offcanvas-panel" id="offcanvasBottom">
-        <div class="offcanvas-handle"></div>
+    <div class="offcanvas-panel" id="offcanvasTop">
         <div class="offcanvas-header">
             <h5 class="offcanvas-title">Transfer ke<b id="target">—</b></h5>
             <button type="button" class="btn-close" id="offcanvasClose">&times;</button>
@@ -521,6 +465,7 @@
                 <button type="submit" id="submit" class="btn-transfer">Kirim Chip</button>
             </form>
         </div>
+        <div class="offcanvas-handle"></div>
     </div>
 
     <div class="viewer-toast" id="viewerToast"></div>
@@ -531,14 +476,34 @@
 <script>
     var connect_stat = false;
     var pollTimeout;
+    var offlinePollInterval;
+    var wsDebounceTimer;
     var contentLoading = false;
+    var lastManualRefresh = 0;
+    var POLL_MS = 30000;
+    var OFFLINE_POLL_MS = 20000;
+    var WS_DEBOUNCE_MS = 2000;
 
     function schedulePoll() {
         clearTimeout(pollTimeout);
         pollTimeout = setTimeout(function() {
             content();
             if (connect_stat) schedulePoll();
-        }, 10000);
+        }, POLL_MS);
+    }
+
+    function startOfflinePoll() {
+        clearInterval(offlinePollInterval);
+        offlinePollInterval = setInterval(content, OFFLINE_POLL_MS);
+    }
+
+    function refreshFromWs() {
+        if (Date.now() - lastManualRefresh < WS_DEBOUNCE_MS) return;
+        clearTimeout(wsDebounceTimer);
+        wsDebounceTimer = setTimeout(function() {
+            content();
+            schedulePoll();
+        }, WS_DEBOUNCE_MS);
     }
 
     function showToast(msg) {
@@ -549,12 +514,12 @@
 
     function openOffcanvas() {
         $("#offcanvasBackdrop").addClass("show");
-        $("#offcanvasBottom").addClass("show");
+        $("#offcanvasTop").addClass("show");
         document.body.style.overflow = "hidden";
     }
     function closeOffcanvas() {
         $("#offcanvasBackdrop").removeClass("show");
-        $("#offcanvasBottom").removeClass("show");
+        $("#offcanvasTop").removeClass("show");
         document.body.style.overflow = "";
     }
 
@@ -590,17 +555,18 @@
     var sock = new WebSocket('<?= $this->WS_SERV ?>');
     sock.onopen = function() {
         connect_stat = true;
+        clearInterval(offlinePollInterval);
         $("#server_status").addClass("connected").html('<span class="live-dot"></span> Live');
         schedulePoll();
     };
     sock.onmessage = function() {
-        content();
-        schedulePoll();
+        refreshFromWs();
     };
     sock.onclose = function() {
         connect_stat = false;
         clearTimeout(pollTimeout);
-        setInterval(function() { content(); }, 3000);
+        clearTimeout(wsDebounceTimer);
+        startOfflinePoll();
         $("#server_status").removeClass("connected").html('<span class="live-dot"></span> Offline');
     };
 
@@ -641,42 +607,21 @@
         } catch(e) {}
     }
 
-    function animateValue($el, from, to) {
-        if (from === to) return;
-        var duration = 400;
-        var start = performance.now();
-        function step(now) {
-            var p = Math.min((now - start) / duration, 1);
-            var eased = 1 - Math.pow(1 - p, 3);
-            var val = Math.round(from + (to - from) * eased);
-            $el.text(val.toLocaleString());
-            if (p < 1) requestAnimationFrame(step);
-        }
-        requestAnimationFrame(step);
-    }
-
     function content() {
         if (contentLoading) return;
         contentLoading = true;
-        var oldChip = parseInt($(".chip-box.me .value").text().replace(/,/g, '')) || 0;
+        var oldChip = parseInt($(".chip-hero-value").first().text().replace(/,/g, '')) || 0;
         $("#content").load('<?= $this->BASE_URL ?><?= $data['page'] ?>/content', function() {
             contentLoading = false;
-            $("#content").removeClass("loading");
-            var $meVal = $(".chip-box.me .value");
-            var newChip = parseInt($meVal.text().replace(/,/g, '')) || 0;
+            var newChip = parseInt($(".chip-hero-value").first().text().replace(/,/g, '')) || 0;
             if (newChip <= 300) startKritisLoop(); else stopKritisLoop();
-            if (oldChip > 0 && newChip !== oldChip) {
-                if (newChip > oldChip) playCoinin();
-                animateValue($meVal, oldChip, newChip);
-            }
+            if (oldChip > 0 && newChip > oldChip) playCoinin();
         });
         mutasi();
     }
 
     function mutasi() {
-        $("#mutasi").load("<?= $this->BASE_URL ?>Room/cek", function() {
-            $("#mutasi").removeClass("loading");
-        });
+        $("#mutasi").load("<?= $this->BASE_URL ?>Room/cek");
     }
 
     $("#transferForm").on("submit", function(e) {
@@ -698,6 +643,7 @@
                 if (res == 0) {
                     $("input[name=c]").val("");
                     closeOffcanvas();
+                    lastManualRefresh = Date.now();
                     content();
                     showToast("Transfer berhasil!");
                     if (connect_stat === true) sock.send(JSON.stringify({ text: 0 }));

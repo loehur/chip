@@ -9,17 +9,6 @@
         background: linear-gradient(145deg, #151518 0%, #111113 100%);
         border: 1px solid rgba(255,255,255,0.06);
         border-radius: 14px;
-        transition: border-color 0.2s ease;
-        animation: txIn 0.35s ease backwards;
-    }
-    .tx-item:nth-child(1) { animation-delay: 0.03s; }
-    .tx-item:nth-child(2) { animation-delay: 0.06s; }
-    .tx-item:nth-child(3) { animation-delay: 0.09s; }
-    .tx-item:nth-child(4) { animation-delay: 0.12s; }
-    .tx-item:nth-child(5) { animation-delay: 0.15s; }
-    @keyframes txIn {
-        from { opacity: 0; transform: translateX(-8px); }
-        to { opacity: 1; transform: translateX(0); }
     }
     .tx-item:hover { border-color: rgba(255,255,255,0.1); }
     .tx-icon {

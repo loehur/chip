@@ -18,18 +18,11 @@ $rankMedals = ['🥇', '🥈', '🥉'];
         background: linear-gradient(145deg, #ffffff 0%, #f8fafc 100%);
         border: 1px solid rgba(15,23,42,0.07);
         border-radius: 12px;
-        transition: all 0.25s ease;
-        animation: lbIn 0.4s ease backwards;
-        box-shadow: 0 1px 2px rgba(15,23,42,0.03);
     }
-    .lb-item:nth-child(1) { animation-delay: 0.02s; border-color: rgba(234,179,8,0.35); background: linear-gradient(145deg, rgba(254,243,199,0.5) 0%, #ffffff 100%); }
-    .lb-item:nth-child(2) { animation-delay: 0.06s; border-color: rgba(148,163,184,0.35); }
-    .lb-item:nth-child(3) { animation-delay: 0.1s; border-color: rgba(180,83,9,0.25); background: linear-gradient(145deg, rgba(254,237,213,0.4) 0%, #ffffff 100%); }
-    @keyframes lbIn {
-        from { opacity: 0; transform: translateY(10px); }
-        to { opacity: 1; transform: translateY(0); }
-    }
-    .lb-item:hover { border-color: rgba(99,102,241,0.3); transform: translateX(2px); box-shadow: 0 4px 12px rgba(99,102,241,0.08); }
+    .lb-item:nth-child(1) { border-color: rgba(234,179,8,0.35); background: linear-gradient(145deg, rgba(254,243,199,0.5) 0%, #ffffff 100%); }
+    .lb-item:nth-child(2) { border-color: rgba(148,163,184,0.35); }
+    .lb-item:nth-child(3) { border-color: rgba(180,83,9,0.25); background: linear-gradient(145deg, rgba(254,237,213,0.4) 0%, #ffffff 100%); }
+    .lb-item:hover { border-color: rgba(99,102,241,0.3); }
     .lb-rank {
         width: 28px;
         text-align: center;
@@ -71,7 +64,6 @@ $rankMedals = ['🥇', '🥈', '🥉'];
         height: 100%;
         border-radius: 2px;
         background: linear-gradient(90deg, #6366f1, #a855f7);
-        transition: width 0.6s cubic-bezier(0.32, 0.72, 0, 1);
     }
     .lb-chip {
         font-family: 'JetBrains Mono', monospace;

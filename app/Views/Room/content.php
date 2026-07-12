@@ -21,7 +21,6 @@ function chipInitials($name) {
         text-align: center;
         margin-bottom: 1.25rem;
         box-shadow: 0 8px 32px rgba(99,102,241,0.12);
-        animation: cardIn 0.4s ease;
     }
     .chip-hero::before {
         content: '';
@@ -32,10 +31,6 @@ function chipInitials($name) {
         height: 200px;
         background: radial-gradient(circle, rgba(139,92,246,0.2), transparent 70%);
         pointer-events: none;
-    }
-    @keyframes cardIn {
-        from { opacity: 0; transform: translateY(12px) scale(0.98); }
-        to { opacity: 1; transform: translateY(0) scale(1); }
     }
     .chip-hero-label {
         font-size: 0.6875rem;
@@ -119,16 +114,8 @@ function chipInitials($name) {
         border-radius: 14px;
         padding: 1rem 0.875rem;
         text-align: center;
-        transition: all 0.25s cubic-bezier(0.32, 0.72, 0, 1);
-        animation: cardIn 0.4s ease backwards;
     }
     .chip-box.friend { cursor: pointer; }
-    .chip-box.friend:nth-child(1) { animation-delay: 0.05s; }
-    .chip-box.friend:nth-child(2) { animation-delay: 0.1s; }
-    .chip-box.friend:nth-child(3) { animation-delay: 0.15s; }
-    .chip-box.friend:nth-child(4) { animation-delay: 0.2s; }
-    .chip-box.friend:nth-child(5) { animation-delay: 0.25s; }
-    .chip-box.friend:nth-child(6) { animation-delay: 0.3s; }
     .chip-box.friend:hover {
         border-color: rgba(99,102,241,0.35);
         background: linear-gradient(145deg, rgba(99,102,241,0.1) 0%, rgba(139,92,246,0.06) 100%);

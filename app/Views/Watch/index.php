@@ -277,22 +277,6 @@
         }
         .watch-desktop-only { display: none; }
 
-        /* Skeleton */
-        .skel {
-            background: linear-gradient(90deg, #e2e8f0 25%, #f1f5f9 50%, #e2e8f0 75%);
-            background-size: 200% 100%;
-            animation: shimmer 1.4s infinite;
-            border-radius: 10px;
-        }
-        @keyframes shimmer {
-            0% { background-position: 200% 0; }
-            100% { background-position: -200% 0; }
-        }
-        .loading .skel-wrap { display: block; }
-        .loading > :not(.skel-wrap) { display: none !important; }
-        .skel-wrap { display: none; }
-        .skel-row { height: 64px; margin-bottom: 0.5rem; }
-
         .watch-footer {
             text-align: center;
             padding: 1.5rem 0 0.5rem;
@@ -350,14 +334,7 @@
                     </h2>
                 </div>
                 <div class="panel-body">
-                    <div id="watchContent" class="loading">
-                        <div class="skel-wrap">
-                            <div class="skel skel-row"></div>
-                            <div class="skel skel-row"></div>
-                            <div class="skel skel-row"></div>
-                            <div class="skel skel-row"></div>
-                        </div>
-                    </div>
+                    <div id="watchContent"></div>
                 </div>
             </div>
         </div>
@@ -371,13 +348,7 @@
                     </h2>
                 </div>
                 <div class="panel-body">
-                    <div id="watchHistory" class="loading">
-                        <div class="skel-wrap">
-                            <div class="skel skel-row"></div>
-                            <div class="skel skel-row"></div>
-                            <div class="skel skel-row"></div>
-                        </div>
-                    </div>
+                    <div id="watchHistory"></div>
                 </div>
             </div>
         </div>
@@ -411,14 +382,32 @@
 <script>
     var connect_stat = false;
     var pollTimeout;
+    var offlinePollInterval;
+    var wsDebounceTimer;
     var contentBusy = false;
+    var POLL_MS = 30000;
+    var OFFLINE_POLL_MS = 20000;
+    var WS_DEBOUNCE_MS = 2000;
 
     function schedulePoll() {
         clearTimeout(pollTimeout);
         pollTimeout = setTimeout(function() {
             refreshAll();
             if (connect_stat) schedulePoll();
-        }, 10000);
+        }, POLL_MS);
+    }
+
+    function startOfflinePoll() {
+        clearInterval(offlinePollInterval);
+        offlinePollInterval = setInterval(refreshAll, OFFLINE_POLL_MS);
+    }
+
+    function refreshFromWs() {
+        clearTimeout(wsDebounceTimer);
+        wsDebounceTimer = setTimeout(function() {
+            refreshAll();
+            schedulePoll();
+        }, WS_DEBOUNCE_MS);
     }
 
     $(".watch-tab").on("click", function() {
@@ -446,14 +435,13 @@
 
     function loadContent($target, callback) {
         $target.load("<?= $this->BASE_URL ?>Watch/content", function() {
-            $target.removeClass("loading");
             if (callback) callback();
         });
     }
 
-    function loadHistory($target) {
+    function loadHistory($target, callback) {
         $target.load("<?= $this->BASE_URL ?>Watch/history", function() {
-            $target.removeClass("loading");
+            if (callback) callback();
         });
     }
 
@@ -469,10 +457,11 @@
             contentBusy = false;
         });
 
-        loadHistory($("#watchHistory"));
-        if (isDesktop()) {
-            loadHistory($("#watchHistoryDesktop"));
-        }
+        loadHistory($("#watchHistory"), function() {
+            if (isDesktop()) {
+                $("#watchHistoryDesktop").html($("#watchHistory").html());
+            }
+        });
     }
 
     $(document).ready(function() {
@@ -482,17 +471,18 @@
     var sock = new WebSocket('<?= $this->WS_SERV ?>');
     sock.onopen = function() {
         connect_stat = true;
+        clearInterval(offlinePollInterval);
         $("#liveStatus").addClass("on").html('<span class="dot"></span> Live');
         schedulePoll();
     };
     sock.onmessage = function() {
-        refreshAll();
-        schedulePoll();
+        refreshFromWs();
     };
     sock.onclose = function() {
         connect_stat = false;
         clearTimeout(pollTimeout);
-        setInterval(refreshAll, 5000);
+        clearTimeout(wsDebounceTimer);
+        startOfflinePoll();
         $("#liveStatus").removeClass("on").html('<span class="dot"></span> Offline');
     };
 
