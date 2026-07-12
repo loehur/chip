@@ -20,7 +20,13 @@ class Route extends DB_Config
             date_default_timezone_set("Asia/Jakarta");
             $this->controller = $url[0];
         } else {
-            require_once "app/Views/Error/404.php";
+            require_once 'app/Core/Controller.php';
+            (new class extends Controller {
+                public function __construct()
+                {
+                    $this->view('Error/404');
+                }
+            });
             exit();
         }
 

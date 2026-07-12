@@ -17,4 +17,12 @@ class Controller extends Public_Variables
         require_once "app/Models/" . $file . ".php";
         return new $file();
     }
+
+    public function headIcons()
+    {
+        $u = rtrim($this->ASSETS_URL, '/') . '/img/';
+        echo '<link rel="icon" href="' . $u . 'favicon.svg" type="image/svg+xml">' . "\n";
+        echo '    <link rel="icon" href="' . $u . 'favicon.png" type="image/png" sizes="32x32">' . "\n";
+        echo '    <link rel="apple-touch-icon" href="' . $u . 'apple-touch-icon.png">';
+    }
 }
